@@ -1,3 +1,17 @@
+# CarbonCopy frontend repo
+
+### Useful Docs:
+  * Testing:
+    * [Jest:](https://jestjs.io/) Unit Testing
+    * [Testing Library:](https://testing-library.com/) Adds some useful unit test calls
+    * [Playwright:](https://playwright.dev/docs/intro) E2E Testing
+  * Config:
+    * [Husky:](https://typicode.github.io/husky/) Adds linting, tests and all sorts of fun things to your commits
+
+
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
