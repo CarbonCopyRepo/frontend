@@ -11,7 +11,7 @@
   * Config:
     * [Husky:](https://typicode.github.io/husky/) Adds linting, tests and all sorts of fun things to your commits
    
-  * Misk:
+  * Misc:
     * [Followed Bulletproof React](https://github.com/alan2207/bulletproof-react) 
  
 
