@@ -1,13 +1,19 @@
 # CarbonCopy frontend repo
 
 ### Useful Docs:
+  * Styling:
+    * [Clean Code Javascript](https://github.com/ryanmcdermott/clean-code-javascript)
+    * [Naming Cheatsheet](https://github.com/kettanaito/naming-cheatsheet)
   * Testing:
     * [Jest:](https://jestjs.io/) Unit Testing
     * [Testing Library:](https://testing-library.com/) Adds some useful unit test calls
     * [Playwright:](https://playwright.dev/docs/intro) E2E Testing
   * Config:
     * [Husky:](https://typicode.github.io/husky/) Adds linting, tests and all sorts of fun things to your commits
-
+   
+  * Misk:
+    * [Followed Bulletproof React](https://github.com/alan2207/bulletproof-react) 
+ 
 
 
 
