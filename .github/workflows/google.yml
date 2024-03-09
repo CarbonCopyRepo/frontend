@@ -46,14 +46,14 @@ jobs:
 
     - name: Docker configuration
       run: |-
-        gcloud auth configure-docker --quiet
+        gcloud auth configure-docker $REPOSITORY --quiet
 
     - name: Build
       run: |-
-        docker build . -t gcr.io/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME
+        docker build . -t $REPOSITORY/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME
 
     # Push the Docker image to Google Artifact Registry
     - name: Publish
       run: |-
-        docker push gcr.io/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:latest
+        docker push $REPOSITORY/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:latest
 
