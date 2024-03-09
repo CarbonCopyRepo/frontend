@@ -55,5 +55,5 @@ jobs:
     # Push the Docker image to Google Artifact Registry
     - name: Publish
       run: |-
-        docker push gcr.io/$PROJECT_ID/$REPOSITORY/$IMAGE:latest
+        docker push gcr.io/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:latest
 
