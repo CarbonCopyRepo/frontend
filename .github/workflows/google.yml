@@ -50,10 +50,10 @@ jobs:
 
     - name: Build
       run: |-
-        docker build . -t $REPOSITORY/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME
+        docker build . -t gcr.io/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME
 
     # Push the Docker image to Google Artifact Registry
     - name: Publish
       run: |-
-        docker push $REPOSITORY/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:latest
+        docker push gcr.io/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:latest
 
