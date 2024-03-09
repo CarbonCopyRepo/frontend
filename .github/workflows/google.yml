@@ -46,7 +46,7 @@ jobs:
 
     - name: Docker configuration
       run: |-
-        echo ${{steps.auth.outputs.access_token}} | docker login -u oauth2accesstoken --password-stdin https://$GAR_LOCATION-docker.pkg.dev
+        gcloud auth configure-docker --quiet
 
     - name: Build
       run: |-
