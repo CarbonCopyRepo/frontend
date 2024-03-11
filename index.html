@@ -7,6 +7,7 @@
     <title>Vite + React + TS</title>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!--include bootstrap-->
+    <link rel="stylesheet" href="style.css">
 
   </head>
   <body>
@@ -14,6 +15,8 @@
     <script type="module" src="/src/main.tsx"></script>
 
     <!-- navbar -->
+    <div class="container">
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">EVI HUB</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,8 +36,25 @@
         </ul>
       </div>
     </nav>
+  </div>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!--Form for user location-->
+  <div class = "locationFormContainer">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form  id = "locationForm">
+          <div class="form-group">
+            <label for="locationInput">Enter Your Location</label>
+            <input type="text" class="form-control" id="locationInput" placeholder="E.g., New York, London">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+    <script src = "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   </body>
 </html>
