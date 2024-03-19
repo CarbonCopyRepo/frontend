@@ -1,42 +1,102 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Reset some basic elements */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f7f7; /* Light grey background */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Full page container */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full height of viewport */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  padding: 1rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Style the header */
+header {
+  margin-bottom: 2rem;
+  text-align: center; /* Center the title */
+}
+
+/* The form input styling */
+input[type='text'] {
+  margin: 0.5rem 0.25rem; /* Spacing between inputs */
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  width: calc(50% - 0.5rem); /* Half width minus margin */
+}
+
+/* The submit button styling */
+button[type='submit'] {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin: 0.5rem 0; /* Spacing around button */
+  width: 100%; /* Full width of the container */
+}
+
+button[type='submit']:hover {
+  background-color: #0056b3;
+}
+
+/* Style the container of the charging stations list */
+.station-list {
+  width: 100%; /* Full width of the container */
+  max-width: 800px; /* Maximum width of the list */
+  margin-top: 1rem; /* Spacing from the form */
+}
+
+.station-list h4 {
+  margin: 0;
+  font-size: 1.25rem; /* Larger font size for titles */
+}
+
+.station-list p {
+  margin: 0.25rem 0; /* Smaller spacing for paragraphs */
+  color: #555;
+}
+
+/* Make the charging station entries look like cards */
+.station-list > div {
+  background-color: white; /* White background for cards */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Simple shadow for depth */
+  margin-bottom: 1rem; /* Spacing between cards */
+  padding: 1rem; /* Padding inside cards */
+  border-radius: 0.25rem; /* Rounded corners for cards */
+}
+
+/* Utility classes for spacing */
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+.mb-3 { margin-bottom: 3rem; }
+.mb-4 { margin-bottom: 4rem; }
+
+@media (min-width: 768px) {
+  /* Larger side padding on larger screens */
+  .container {
+    padding: 1rem 4rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  /* Input fields side by side on larger screens */
+  input[type='text'] {
+    width: auto; /* Auto width for flex growth */
+    flex-grow: 1; /* Allow inputs to grow equally */
+    margin: 0.5rem; /* Uniform margin */
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  /* Adjust button width on larger screens */
+  button[type='submit'] {
+    width: auto; /* Auto width for flex growth */
+    padding: 0.5rem 2rem; /* Larger button padding */
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
