@@ -93,8 +93,11 @@ function App() {
   };
 
   return (
+
+
     <div className="container my-5">
-      <h1 className="mb-4">EV Charging Station Locator</h1>
+
+      <h1 className="mb-4">Determine Your Electric Car Eligibility</h1>
       <form onSubmit={handleSubmit} className="input-group mb-3">
         <input
           type="text"

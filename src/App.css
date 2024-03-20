@@ -37,16 +37,16 @@ button[type='submit'] {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   color: white;
-  background-color: #007bff;
+  background-color: #F75B20;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 0.60rem;
   cursor: pointer;
   margin: 0.5rem 0; /* Spacing around button */
   width: 100%; /* Full width of the container */
 }
 
 button[type='submit']:hover {
-  background-color: #0056b3;
+  background-color: #FFA148;
 }
 
 /* Style the container of the charging stations list */
