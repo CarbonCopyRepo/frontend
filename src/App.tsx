@@ -94,50 +94,56 @@ function App() {
 
   return (
 
-
     <div className="container my-5">
-
-      <h1 className="mb-4">Determine Your Electric Car Eligibility</h1>
-      <form onSubmit={handleSubmit} className="input-group mb-3">
-        <input
-          type="text"
-          className="form-control"
-          name="lat"
-          value={coordinates.lat}
-          onChange={handleChange}
-          placeholder="Latitude"
-        />
-        <input
-          type="text"
-          className="form-control"
-          name="lng"
-          value={coordinates.lng}
-          onChange={handleChange}
-          placeholder="Longitude"
-        />
-        <div className="input-group-append">
-          <button className="btn btn-primary" type="submit" disabled={loading}>
-            {loading ? 'Loading...' : 'Find Stations'}
-          </button>
-        </div>
-      </form>
-      <div>
-        {chargingStations.length > 0 ? (
-          <div className="card-columns">
-            {chargingStations.map((station) => (
-              <div className="card" key={station.id}>
-                <div className="card-body">
-                  <h5 className="card-title">{station.title}</h5>
-                  <p className="card-text">{station.address.label}</p>
-                </div>
-              </div>
-            ))}
+      <section className = "userLocationInputSection">
+        <h1 className="mb-4">Determine Your Electric <span>Car Eligibility</span></h1>
+        <form onSubmit={handleSubmit} className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            name="lat"
+            value={coordinates.lat}
+            onChange={handleChange}
+            placeholder="Latitude"
+          />
+          <input
+            type="text"
+            className="form-control"
+            name="lng"
+            value={coordinates.lng}
+            onChange={handleChange}
+            placeholder="Longitude"
+          />
+          <div className="input-group-append">
+            <button className="btn btn-primary" type="submit" disabled={loading}>
+              {loading ? 'Loading...' : 'Find Stations'}
+            </button>
           </div>
-        ) : (
-          <p>No charging stations found.</p>
-        )}
-      </div>
+        </form>
+        <div>
+          {chargingStations.length > 0 ? (
+            <div className="card-columns">
+              {chargingStations.map((station) => (
+                <div className="card" key={station.id}>
+                  <div className="card-body">
+                    <h5 className="card-title">{station.title}</h5>
+                    <p className="card-text">{station.address.label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No charging stations found.</p>
+          )}
+        </div>
+      </section>
+
+      <section className ="map">
+      <p>Map placeholder</p>
+      </section>
     </div>
+
+
   );
 }
 

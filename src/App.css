@@ -2,19 +2,24 @@
 html, body, #root {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f7f7f7; /* Light grey background */
+  font-family: "Golos Text", sans-serif;
+  font-weight: 550;
+
+}
+
+.mb-4 span {
+  display: block; /* Make "To Me" appear on a new line */
+}
+
+#full-page {
+  background-image: url("images/background.svg"); /* Replace 'your-image-url.jpg' with the URL of your image */
+  background-size: cover; /* Cover the entire background */
+  background-repeat: no-repeat; /* Do not repeat the background image */
+
 }
 
 /* Full page container */
-.container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Full height of viewport */
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
-  padding: 1rem;
-}
+
 
 /* Style the header */
 header {
@@ -100,3 +105,21 @@ button[type='submit']:hover {
     padding: 0.5rem 2rem; /* Larger button padding */
   }
 }
+
+.map {
+  width: 50%;
+  float: right;
+  padding: 20px;
+  box-sizing: border-box;
+  height: 500px; /* Adjust as needed */
+  background-color: #e9e9e9;
+  text-align: center;
+}
+
+.userLocationInputSection {
+  width: 50%;
+  float: left;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
