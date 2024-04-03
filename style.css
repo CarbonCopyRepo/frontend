@@ -1,0 +1,23 @@
+.locationFormContainer {
+    margin-top: 50px;
+  }
+  
+  #locationForm .form-group {
+    margin-bottom: 20px;
+  }
+  
+  #locationForm .form-control {
+    border-radius: 20px;
+  }
+  
+  #locationForm .btn-primary {
+    background-color: #ff6961;
+    border-color: #ff6961;
+    border-radius: 20px;
+  }
+  
+  #locationForm .btn-primary:hover {
+    background-color: #ffa07a;
+    border-color: #ffa07a;
+  }
+  

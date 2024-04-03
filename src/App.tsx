@@ -1,5 +1,10 @@
 import { useState } from 'react';
 import './App.css';
+import { 
+  GoogleMap, 
+  LoadScript, 
+  Marker } from '@react-google-maps/api';
+
 
 interface Address {
   label: string;
@@ -63,7 +68,17 @@ interface ChargingStation {
   contacts: Contacts[];
 }
 
+const libraries = ['places'];
+const mapContainerStyle = {
+  width: '600px',
+  height: '450px',
+};
+const center = { lat: -3.745, lng: -38.523 };
+
+
 function App() {
+
+  
   const [coordinates, setCoordinates] = useState({ lat: '', lng: '' });
   const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]); // Use the interface here
   const [loading, setLoading] = useState(false);
@@ -139,7 +154,16 @@ function App() {
       </section>
 
       <section className ="map">
-      <p>Map placeholder</p>
+      <LoadScript
+        googleMapsApiKey='AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc'>
+            <GoogleMap
+              mapContainerStyle={mapContainerStyle}
+              center = {center}
+              zoom={10}
+              >
+                <Marker position={center}/>
+              </GoogleMap>
+          </LoadScript>
       </section>
     </div>
 
