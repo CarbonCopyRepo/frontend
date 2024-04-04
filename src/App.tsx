@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import './App.css';
 import { 
   GoogleMap, 
@@ -74,14 +74,21 @@ const mapContainerStyle = {
   height: '450px',
 };
 const center = { lat: -3.745, lng: -38.523 };
+const customMarkerIcon = 'images/markerIcon.svg';
+
 
 
 function App() {
 
   
-  const [coordinates, setCoordinates] = useState({ lat: '', lng: '' });
-  const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]); // Use the interface here
+  const [coordinates, setCoordinates] = useState({ lat: '40.0150', lng: '-105.2705'});
+  const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]); 
   const [loading, setLoading] = useState(false);
+  const [center, setCenter] = useState({ lat: -3.745, lng: -38.523 }); 
+
+  useEffect(() => {
+    setCenter({ lat: parseFloat(coordinates.lat), lng: parseFloat(coordinates.lng) });
+  }, [coordinates]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCoordinates({ ...coordinates, [e.target.name]: e.target.value });
@@ -95,7 +102,6 @@ function App() {
     const category = '700-7600-0322,700-7600-0325'; // EV charging station and EV battery swap station
     const { lat, lng } = coordinates;
     const url = `https://browse.search.hereapi.com/v1/browse?at=${lat},${lng}&limit=20&categories=${category}&apiKey=${apiKey}`;
-
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -159,9 +165,16 @@ function App() {
             <GoogleMap
               mapContainerStyle={mapContainerStyle}
               center = {center}
-              zoom={10}
+              zoom={14}
               >
-                <Marker position={center}/>
+              {/* Add a Marker for the user-provided coordinates */}
+              {coordinates.lat && coordinates.lng && (
+                <Marker
+                position={center}
+                icon={customMarkerIcon}
+
+                />
+                )}
               </GoogleMap>
           </LoadScript>
       </section>
