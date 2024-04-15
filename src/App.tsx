@@ -3,8 +3,12 @@ import './App.css';
 import { 
   GoogleMap, 
   LoadScript, 
-  Marker } from '@react-google-maps/api';
-
+  Marker
+   } from '@react-google-maps/api';
+<script
+src="https://maps.googleapis.com/maps/api/js?key=NF2ZNxJaEA5ex5EqB2rGRm8A&callback=initMap&v=weekly&libraries=marker"
+defer
+></script>
 
 interface Address {
   label: string;
@@ -76,11 +80,7 @@ const mapContainerStyle = {
 const center = { lat: -3.745, lng: -38.523 };
 const customMarkerIcon = 'images/markerIcon.svg';
 
-
-
 function App() {
-
-  
   const [coordinates, setCoordinates] = useState({ lat: '40.0150', lng: '-105.2705'});
   const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]); 
   const [loading, setLoading] = useState(false);
@@ -91,7 +91,7 @@ function App() {
   }, [coordinates]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCoordinates({ ...coordinates, [e.target.name]: e.target.value });
+    setCoordinates({ ... coordinates, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -114,7 +114,6 @@ function App() {
   };
 
   return (
-
     <div className="container my-5">
       <section className = "userLocationInputSection">
         <h1 className="mb-4">Determine Your Electric <span>Car Eligibility</span></h1>
@@ -165,20 +164,18 @@ function App() {
             <GoogleMap
               mapContainerStyle={mapContainerStyle}
               center = {center}
-              zoom={14}
+              zoom = {14}
               >
-              {/* Add a Marker for the user-provided coordinates */}
-              {coordinates.lat && coordinates.lng && (
-                <Marker
-                position={center}
-                icon={customMarkerIcon}
-
-                />
-                )}
+              <Marker
+                position={center}>
+                
+              </Marker>
               </GoogleMap>
-          </LoadScript>
+        </LoadScript>
       </section>
     </div>
+
+
 
 
   );
