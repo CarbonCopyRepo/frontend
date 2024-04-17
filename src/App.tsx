@@ -81,17 +81,17 @@ const center = { lat: -3.745, lng: -38.523 };
 const customMarkerIcon = 'images/markerIcon.svg';
 
 function App() {
-  const [coordinates, setCoordinates] = useState({ lat: '40.0150', lng: '-105.2705'});
-  const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]); 
+  const [coordinates, setCoordinates] = useState({ lat: 40.0150, lng: -105.2705 });
+  const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]);
   const [loading, setLoading] = useState(false);
-  const [center, setCenter] = useState({ lat: -3.745, lng: -38.523 }); 
+  const [center, setCenter] = useState({ lat: -3.745, lng: -38.523 });
 
   useEffect(() => {
-    setCenter({ lat: parseFloat(coordinates.lat), lng: parseFloat(coordinates.lng) });
+    setCenter({ lat: (coordinates.lat), lng: (coordinates.lng) });
   }, [coordinates]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCoordinates({ ... coordinates, [e.target.name]: e.target.value });
+    setCoordinates({ ...coordinates, [e.target.name]: parseFloat(e.target.value) });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -106,6 +106,7 @@ function App() {
       const response = await fetch(url);
       const data = await response.json();
       setChargingStations(data.items);
+      setCenter({ lat, lng }); // Update map center to user input
     } catch (error) {
       console.error('Error fetching data: ', error);
     } finally {
@@ -115,31 +116,33 @@ function App() {
 
   return (
     <div className="container my-5">
-      <section className = "userLocationInputSection">
+      <section className="userLocationInputSection">
         <h1 className="mb-4">Determine Your Electric <span>Car Eligibility</span></h1>
-        <form onSubmit={handleSubmit} className="input-group mb-3">
-          <input
-            type="text"
-            className="form-control"
-            name="lat"
-            value={coordinates.lat}
-            onChange={handleChange}
-            placeholder="Latitude"
-          />
-          <input
-            type="text"
-            className="form-control"
-            name="lng"
-            value={coordinates.lng}
-            onChange={handleChange}
-            placeholder="Longitude"
-          />
-          <div className="input-group-append">
-            <button className="btn btn-primary" type="submit" disabled={loading}>
-              {loading ? 'Loading...' : 'Find Stations'}
-            </button>
-          </div>
-        </form>
+        <div className='form-container'>
+          <form onSubmit={handleSubmit} className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              name="lat"
+              value={coordinates.lat.toString()}
+              onChange={handleChange}
+              placeholder="Latitude"
+            />
+            <input
+              type="text"
+              className="form-control"
+              name="lng"
+              value={coordinates.lng.toString()}
+              onChange={handleChange}
+              placeholder="Longitude"
+            />
+            <div className="input-group-append">
+              <button className="btn btn-primary" type="submit" disabled={loading}>
+                {loading ? 'Loading...' : 'Find Stations'}
+              </button>
+            </div>
+          </form>
+        </div>
         <div>
           {chargingStations.length > 0 ? (
             <div className="card-columns">
@@ -158,26 +161,24 @@ function App() {
         </div>
       </section>
 
-      <section className ="map">
-      <LoadScript
-        googleMapsApiKey='AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc'>
-            <GoogleMap
-              mapContainerStyle={mapContainerStyle}
-              center = {center}
-              zoom = {14}
-              >
+      <section className="map">
+        <LoadScript googleMapsApiKey='AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc'>
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            center={center}
+            zoom={14}
+          >
+            {chargingStations.map(station => (
               <Marker
-                position={center}>
-                
-              </Marker>
-              </GoogleMap>
+                key={station.id}
+                position={{ lat: station.position.lat, lng: station.position.lng }}
+                title={station.title}
+              />
+            ))}
+          </GoogleMap>
         </LoadScript>
       </section>
     </div>
-
-
-
-
   );
 }
 
