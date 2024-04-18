@@ -1,21 +1,71 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EVI Hub</title>
-    <link rel="icon" href="images\favicon.svg" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!--include bootstrap-->
+    <link rel="icon" href="images/favicon.svg" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap" rel="stylesheet">
-  </head>
-
-  <body id = "full-page" >
+    <style>
+        /* Reset padding and margin */
+        body, html {
+            padding: 0;
+            margin: 0;
+        }
+        .top-block {
+            height: 70px; /* Adjust the height as needed */
+            background-color: white; /* White background color */
+            width: 100%; /* Full width */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001; /* Ensure it is above other content */
+        }
+        .navbar {
+            width: 100%;
+            position: fixed;
+            top: 70px; /* Set to the height of the .top-block */
+            left: 0;
+            z-index: 1000;
+        }
+        main {
+            padding-top: 0px; /* Increase padding to accommodate both .top-block and .navbar */
+        }
+    </style>
+</head>
+<body id="full-page">
+    <div class="top-block"></div> <!-- Moved outside the navbar -->
+    <!-- Navigation bar -->
+    <div>
+      <nav class="navbar">
+          <a class="navbar-brand" href="#">
+              <img id="navbar_logo" src="images/favicon.svg" style="height: 30px; width: auto;">
+          </a>
+   
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Features</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Pricing</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                  </li>
+              </ul>
+          </div>
+      </nav>
+    </div>
     <main>
         <section id="root"></section>
-        <script type="module" src = "/src/main.tsx" > </script>
+        <script type="module" src="/src/main.tsx"></script>
     </main>
-  </body>
-  
+</body>
 </html>

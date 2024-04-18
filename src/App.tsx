@@ -74,8 +74,11 @@ interface ChargingStation {
 
 const libraries = ['places'];
 const mapContainerStyle = {
-  width: '600px',
-  height: '450px',
+  width: '800px',
+  height: '400px',
+  borderRadius: '10px',
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
+  overflow: 'hidden' // Important for applying border-radius to a map
 };
 const center = { lat: -3.745, lng: -38.523 };
 const customMarkerIcon = 'images/markerIcon.svg';
@@ -116,8 +119,8 @@ function App() {
 
   return (
     <div className="container my-5">
+      <h1 className="mb-4">Determine Your Electric <span>Car Eligibility</span></h1>
       <section className="userLocationInputSection">
-        <h1 className="mb-4">Determine Your Electric <span>Car Eligibility</span></h1>
         <div className='form-container'>
           <form onSubmit={handleSubmit} className="input-group mb-3">
             <input
@@ -166,7 +169,7 @@ function App() {
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             center={center}
-            zoom={14}
+            zoom={14} 
           >
             {chargingStations.map(station => (
               <Marker
