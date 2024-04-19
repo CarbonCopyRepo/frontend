@@ -130,6 +130,30 @@ button[type='submit']:hover {
   float: left;
   padding: 20px;
   box-sizing: border-box;
-  
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column; /* Aligns children (cards) in a column */
+  overflow-y: auto; /* Enables vertical scrolling if content overflows */
+  max-height: 300px; /* Set maximum height of the container */
+  width: 100%; /* Optional: sets the width to fit the parent container */
+}
+
+.card {
+  margin-bottom: 10px; /* Adds space between cards */
+}
+
+.checkboxes-container {
+  display: flex;
+  flex-direction: row; /* Align children (checkboxes) in a row */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Keeps the checkboxes in a single line */
+  max-width: 100%; /* Adjust based on your layout needs */
+  padding: 10px; /* Optional padding */
+}
+
+.checkbox-item {
+  margin-right: 20px; /* Space between checkboxes */
 }
 

@@ -72,6 +72,11 @@ interface ChargingStation {
   contacts: Contacts[];
 }
 
+interface VisibilityMap {
+  [key: string]: boolean;
+}
+
+
 const libraries = ['places'];
 const mapContainerStyle = {
   width: '800px',
@@ -88,6 +93,25 @@ function App() {
   const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]);
   const [loading, setLoading] = useState(false);
   const [center, setCenter] = useState({ lat: -3.745, lng: -38.523 });
+  const [visibleStations, setVisibleStations] = useState<{ [title: string]: boolean }>({});
+
+  useEffect(() => {
+    const initialVisibility: { [title: string]: boolean } = {};
+    chargingStations.forEach(station => {
+      initialVisibility[station.title] = true; // Initially, all titles are visible
+    });
+    setVisibleStations(initialVisibility);
+  }, [chargingStations]);
+  
+
+  
+  
+  const handleCheckboxChange = (title: string) => {
+    setVisibleStations(prevStations => ({
+      ...prevStations,
+      [title]: !prevStations[title] // Toggle visibility based on title
+    }));
+  };  
 
   useEffect(() => {
     setCenter({ lat: (coordinates.lat), lng: (coordinates.lng) });
@@ -148,7 +172,7 @@ function App() {
         </div>
         <div>
           {chargingStations.length > 0 ? (
-            <div className="card-columns">
+            <div className="card-container">
               {chargingStations.map((station) => (
                 <div className="card" key={station.id}>
                   <div className="card-body">
@@ -159,26 +183,48 @@ function App() {
               ))}
             </div>
           ) : (
-            <p>No charging stations found.</p>
+            <div className="card">
+              <div className="card-body">
+                No charging stations found.
+              </div>
+            </div>
           )}
         </div>
+
       </section>
 
       <section className="map">
+
+      <div className="checkboxes-container">
+        {[...new Set(chargingStations.map(station => station.title))].map(title => (
+          <div key={title} className="checkbox-item">
+            <input
+              type="checkbox"
+              id={`checkbox-${title}`}
+              checked={visibleStations[title]}
+              onChange={() => handleCheckboxChange(title)}
+            />
+            <label htmlFor={`checkbox-${title}`}>{title}</label>
+          </div>
+        ))}
+      </div>
+
+
         <LoadScript googleMapsApiKey='AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc'>
-          <GoogleMap
-            mapContainerStyle={mapContainerStyle}
-            center={center}
-            zoom={14} 
-          >
-            {chargingStations.map(station => (
-              <Marker
-                key={station.id}
-                position={{ lat: station.position.lat, lng: station.position.lng }}
-                title={station.title}
-              />
-            ))}
-          </GoogleMap>
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          center={center}
+          zoom={14} 
+        >
+          {chargingStations.filter(station => visibleStations[station.title]).map(station => (
+            <Marker
+              key={station.id}
+              position={{ lat: station.position.lat, lng: station.position.lng }}
+              title={station.title}
+            />
+          ))}
+        </GoogleMap>
+
         </LoadScript>
       </section>
     </div>
