@@ -76,6 +76,9 @@ interface VisibilityMap {
   [key: string]: boolean;
 }
 
+interface ImageMap {
+  [key: string]: string;
+}
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -94,16 +97,52 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [center, setCenter] = useState({ lat: -3.745, lng: -38.523 });
   const [visibleStations, setVisibleStations] = useState<{ [title: string]: boolean }>({});
+  const [stationCounts, setStationCounts] = useState<Array<{ title: string; count: number }>>([]);
+  const imageMap = {
+    "ChargePoint" : "images/station_logos/ChargePoint Logo.jpeg",
+    "EVmatch" : "images/station_logos/EVmatch logo.jpg",
+    "EV Connect" : "images/station_logos/EVConnect logo.png",
+    "Electrify America" : "images/station_logos/Electrify America logo.png",
+    "EVCS" : "images/station_logos/EVCS logo.svg",
+    "Powerflex" : "images/station_logos/powerflex.png",
+    "Shell Recharge" : "images/station_logos/Shell Recharge.png",
+    "Tesla" : "images/station_logos/Tesla.jpg",
+    "EVgo" : "images/station_logos/EVgo.png",
+    "blink" : "images/station_logos/blink logo.png",
+    "AmpUp" : "images/station_logos/ampUp.jpg",
+    "Rivian Adventure Network" : "images/station_logos/Rivian.jpg",
+    "Caltrans" : "images/station_logos/Caltrans.jpg",
+    "Rivian Waypoints" : "images/station_logos/Rivian.jpg",
+    "Volta" : "images/station_logos/volta.png",
+    "FLO" : "images/station_logos/flo.png",
+    "LADWP" : "images/station_logos/LA.webp",
+  }
 
   useEffect(() => {
-    const initialVisibility: { [title: string]: boolean } = {};
+    const counts = new Map();
+    const visibility: VisibilityMap = {};
+  
     chargingStations.forEach(station => {
-      initialVisibility[station.title] = true; // Initially, all titles are visible
+      let count = counts.get(station.title) || 0;
+      counts.set(station.title, count + 1);
+      visibility[station.title] = true;  // Default all titles to visible
     });
-    setVisibleStations(initialVisibility);
+  
+    setStationCounts(Array.from(counts).map(([title, count]) => ({ title, count })));
+    setVisibleStations(visibility);
   }, [chargingStations]);
   
-
+  function getImageForTitle(title: string): string {
+    const lowerCaseTitle = title.toLowerCase();
+    const keys = Object.keys(imageMap) as (keyof typeof imageMap)[];
+  
+    for (let key of keys) {
+      if (lowerCaseTitle.includes(key.toLowerCase())) {
+        return imageMap[key]; // TypeScript understands that key is a valid key of imageMap
+      }
+    }
+    return "images/station_logos/Default.png";
+  }
   
   
   const handleCheckboxChange = (title: string) => {
@@ -120,6 +159,8 @@ function App() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCoordinates({ ...coordinates, [e.target.name]: parseFloat(e.target.value) });
   };
+
+ 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -143,7 +184,29 @@ function App() {
 
   return (
     <div className="container my-5">
-      <h1 className="mb-4">Determine Your Electric <span>Car Eligibility</span></h1>
+      <div className="header-and-cards">
+          <h1 className="mb-4">Determine Your Electric <span>Car Eligibility</span></h1>
+          <div className="station_cards-container">
+            {stationCounts.map(({ title, count }) => (
+              <div key={title} className="station_card">
+                <img src={getImageForTitle(title)} alt={title} className="card-img-top"/>
+                <div className="card-body">
+                  <p className="card-text">{count} stations</p>
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      className = "form-check-input"
+                      id={`checkbox-${title}`}
+                      checked={visibleStations[title]}
+                      onChange={() => handleCheckboxChange(title)}
+                    />
+                    <label className="form-check-label" htmlFor={`checkbox-${title}`}></label>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       <section className="userLocationInputSection">
         <div className='form-container'>
           <form onSubmit={handleSubmit} className="input-group mb-3">
@@ -194,22 +257,6 @@ function App() {
       </section>
 
       <section className="map">
-
-      <div className="checkboxes-container">
-        {[...new Set(chargingStations.map(station => station.title))].map(title => (
-          <div key={title} className="checkbox-item">
-            <input
-              type="checkbox"
-              id={`checkbox-${title}`}
-              checked={visibleStations[title]}
-              onChange={() => handleCheckboxChange(title)}
-            />
-            <label htmlFor={`checkbox-${title}`}>{title}</label>
-          </div>
-        ))}
-      </div>
-
-
         <LoadScript googleMapsApiKey='AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc'>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}

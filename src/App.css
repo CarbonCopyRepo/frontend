@@ -4,7 +4,6 @@ html, body, #root {
   padding: 0;
   font-family: "Golos Text", sans-serif;
   font-weight: 550;
-
 }
 
 form {
@@ -133,11 +132,10 @@ button[type='submit']:hover {
 }
 
 .card-container {
-  display: flex;
   flex-direction: column; /* Aligns children (cards) in a column */
   overflow-y: auto; /* Enables vertical scrolling if content overflows */
   max-height: 300px; /* Set maximum height of the container */
-  width: 100%; /* Optional: sets the width to fit the parent container */
+  width: 100%;
 }
 
 .card {
@@ -157,3 +155,82 @@ button[type='submit']:hover {
   margin-right: 20px; /* Space between checkboxes */
 }
 
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; 
+}
+
+
+.card:hover {
+  transform: translateY(-5px); 
+}
+
+
+.header-and-cards {
+  display: flex;
+  flex-direction: row; /* Align children horizontally */
+  align-items: flex-start; /* Align children to the top */
+}
+
+.station_cards-container {
+  display: flex;
+  flex-direction: row; /* Align children horizontally */
+  flex-wrap: nowrap; /* Prevent wrapping of cards into multiple lines */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  gap: 20px; /* Space between cards */
+  margin-top: 90px;
+  margin-left: 110px;
+}
+
+.station_card {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 175px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  background-color: white; /* White background for cards */
+  border-radius: 20px;
+  align-items: center;     /* Aligns all children including the image in the center horizontally */
+  overflow: hidden; /* Prevents content from overflowing */
+
+}
+
+.card-img-top {
+  flex: 0 0 30%; /* Allocates 30% of the card's height to the image */
+  width: 80%;        /* Makes the image fill the container width */
+  height: auto; /* Fixed height for the image */
+  object-fit: contain;   /* Ensures the image fits within the container without cropping */
+  object-position: center; /* Centers the image within the frame */
+}
+
+.card-body {
+  display: flex;
+  flex: 0 0 50%; /* Allocates 70% of the card's height to the text */
+  flex-direction: column;
+  overflow: hidden; /* Hide overflow to maintain fixed height */
+}
+
+.form-check-input {
+  appearance: none; /* or -webkit-appearance: none; depending on browser support */
+  background-color: #fff; /* Default background */
+  width: 16px; /* Example size, adjust as needed */
+  height: 16px; /* Example size, adjust as needed */
+  border: 1px solid #ccc; /* Example border, adjust as needed */
+  cursor: pointer; /* Pointer cursor on hover */
+  position: relative; /* Needed to position the pseudo-element */
+  border-radius: 5px;
+}
+
+.form-check-input:checked::before {
+  content: "";
+  position: absolute;
+  width: 10px; /* Smaller than the container to fit inside */
+  height: 10px;
+  background-color: grey; /* Grey fill when checked */
+  left: 50%; /* Center the pseudo-element */
+  top: 50%; /* Center the pseudo-element */
+  transform: translate(-50%, -50%); /* Center the pseudo-element perfectly */
+  border-radius: 2px;
+}
