@@ -82,8 +82,8 @@ interface ImageMap {
 
 const libraries = ['places'];
 const mapContainerStyle = {
-  width: '800px',
-  height: '400px',
+  width: '700px',
+  height: '350px',
   borderRadius: '10px',
   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
   overflow: 'hidden' // Important for applying border-radius to a map
@@ -184,30 +184,10 @@ function App() {
 
   return (
     <div className="container my-5">
-      <div className="header-and-cards">
-          <h1 className="mb-4">Determine Your Electric <span>Car Eligibility</span></h1>
-          <div className="station_cards-container">
-            {stationCounts.map(({ title, count }) => (
-              <div key={title} className="station_card">
-                <img src={getImageForTitle(title)} alt={title} className="card-img-top"/>
-                <div className="card-body">
-                  <p className="card-text">{count} stations</p>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className = "form-check-input"
-                      id={`checkbox-${title}`}
-                      checked={visibleStations[title]}
-                      onChange={() => handleCheckboxChange(title)}
-                    />
-                    <label className="form-check-label" htmlFor={`checkbox-${title}`}></label>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+  
       <section className="userLocationInputSection">
+        <h1 className="mb-4">Determine Your Electric <span>Car Eligibility</span></h1>
+
         <div className='form-container'>
           <form onSubmit={handleSubmit} className="input-group mb-3">
             <input
@@ -257,24 +237,53 @@ function App() {
       </section>
 
       <section className="map">
-        <LoadScript googleMapsApiKey='AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc'>
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={center}
-          zoom={14} 
-        >
-          {chargingStations.filter(station => visibleStations[station.title]).map(station => (
-            <Marker
-              key={station.id}
-              position={{ lat: station.position.lat, lng: station.position.lng }}
-              title={station.title}
-            />
-          ))}
-        </GoogleMap>
+        {/* station cards */}
+        <div className="station_cards-container">
+            {stationCounts.map(({ title, count }) => (
+              <div key={title} className="station_card">
+                <img src={getImageForTitle(title)} alt={title} className="card-img-top"/>
+                <div className="card-body">
+                  <p className="station-card-text-count">{count}</p>
+                  <p className="station-card-text">stations</p>
 
-        </LoadScript>
-      </section>
-    </div>
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      className = "form-check-input"
+                      id={`checkbox-${title}`}
+                      checked={visibleStations[title]}
+                      onChange={() => handleCheckboxChange(title)}
+                    />
+                    <label className="form-check-label" htmlFor={`checkbox-${title}`}></label>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Google Map */}
+          <LoadScript googleMapsApiKey='AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc'>
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            center={center}
+            zoom={14} 
+          >
+            {chargingStations.filter(station => visibleStations[station.title]).map(station => (
+              <Marker
+                key={station.id}
+                position={{ lat: station.position.lat, lng: station.position.lng }}
+                title={station.title}
+              />
+            ))}
+
+            <Marker
+              position={center}
+              icon={customMarkerIcon}
+            />
+          </GoogleMap>
+
+          </LoadScript>
+        </section>
+      </div>
   );
 }
 
