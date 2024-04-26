@@ -1,0 +1,93 @@
+[
+    {
+      "year": 2012,
+      "make":"Mitsubishi",
+      "model":"i-MiEV",
+      "energy_per_100_km": 18.7,
+      "vehicle_type":"B",
+      "emissions_per_km": 99,
+      "emissions_per_mile": 62
+    },
+    {
+      "year": 2012,
+      "make":"Nissan",
+      "model":"LEAF",
+      "energy_per_100_km": 21.1,
+      "vehicle_type":"B",
+      "emissions_per_km": 111,
+      "emissions_per_mile": 69
+    },
+    {
+      "year": 2013,
+      "make":"Ford",
+      "model":"Focus Electric",
+      "energy_per_100_km": 20,
+      "vehicle_type":"B",
+      "emissions_per_km": 105,
+      "emissions_per_mile": 65
+    },
+    {
+      "year": 2013,
+      "make":"Mitsubishi",
+      "model":"i-MiEV",
+      "energy_per_100_km": 18.7,
+      "vehicle_type":"B",
+      "emissions_per_km": 99,
+      "emissions_per_mile": 62
+    },
+    {
+      "year": 2013,
+      "make":"Nissan",
+      "model":"LEAF",
+      "energy_per_100_km": 21.1,
+      "vehicle_type":"B",
+      "emissions_per_km": 111,
+      "emissions_per_mile": 69
+    },
+    {
+      "year": 2013,
+      "make":"smart",
+      "model":"fortwo electric drive cabriolet",
+      "energy_per_100_km": 19.6,
+      "vehicle_type":"B",
+      "emissions_per_km": 103,
+      "emissions_per_mile": 64
+    },
+    {
+      "year": 2013,
+      "make":"smart",
+      "model":"fortwo electric drive coupe",
+      "energy_per_100_km": 19.6,
+      "vehicle_type":"B",
+      "emissions_per_km": 103,
+      "emissions_per_mile": 64
+    },
+    {
+      "year": 2013,
+      "make":"Tesla",
+      "model":"Model S (40 kWh)",
+      "energy_per_100_km": 22.2,
+      "vehicle_type":"B",
+      "emissions_per_km": 117,
+      "emissions_per_mile": 73
+    },
+    {
+      "year": 2013,
+      "make":"Tesla",
+      "model":"Model S (60 kWh)",
+      "energy_per_100_km": 21.9,
+      "vehicle_type":"B",
+      "emissions_per_km": 115,
+      "emissions_per_mile": 71
+    },
+    {
+      "year": 2013,
+      "make":"Tesla",
+      "model":"Model S (85 kWh)",
+      "energy_per_100_km": 23.6,
+      "vehicle_type":"B",
+      "emissions_per_km": 124,
+      "emissions_per_mile": 77
+    }
+  ]
+  

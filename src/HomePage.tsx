@@ -1,86 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import './App.css';
-import NavBar from './NavBar'; // Adjust path if different
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import AnalyticsPage from './Analytics';
-
-  <script
-  src="https://maps.googleapis.com/maps/api/js?key=NF2ZNxJaEA5ex5EqB2rGRm8A&callback=initMap&v=weekly&libraries=marker"
-  defer
-  ></script>
+//@ts-ignore
+import './types.ts'; 
+import dotenv from "dotenv";
   
-  interface Address {
-    label: string;
-    countryCode: string;
-    countryName: string;
-    stateCode: string;
-    state: string;
-    county: string;
-    city: string;
-    district: string;
-    street: string;
-    postalCode: string;
-    houseNumber: string;
-  }
-  
-  interface Position {
-    lat: number;
-    lng: number;
-  }
-  
-  interface Access {
-    lat: number;
-    lng: number;
-  }
-  
-  interface Category {
-    id: string;
-    name: string;
-    primary: boolean;
-  }
-  
-  interface Chain {
-    id: string;
-    name: string;
-  }
-  
-  interface ContactPhone {
-    value: string;
-  }
-  
-  interface ContactWww {
-    value: string;
-  }
-  
-  interface Contacts {
-    phone: ContactPhone[];
-    www: ContactWww[];
-  }
-  
-  interface ChargingStation {
-    title: string;
-    id: string;
-    language: string;
-    resultType: string;
-    address: Address;
-    position: Position;
-    access: Access[];
-    distance: number;
-    categories: Category[];
-    chains: Chain[];
-    contacts: Contacts[];
-  }
-  
-  interface VisibilityMap {
-    [key: string]: boolean;
-  }
-  
-  interface ImageMap {
-    [key: string]: string;
-  }
-  
-  const libraries = ['places'];
+const libraries = ['places'];
   const mapContainerStyle = {
     width: '700px',
     height: '350px',
@@ -91,14 +16,56 @@ import AnalyticsPage from './Analytics';
   const center = { lat: -3.745, lng: -38.523 };
   const customMarkerIcon = 'images/markerIcon.svg';
 
+  function haversineDistance(coords1: { lng: any; lat: any; }, coords2: { lng: any; lat: any; }, isMiles = false) {
+    function toRad(x: number) {
+      return x * Math.PI / 180;
+    }
+  
+    var lon1 = coords1.lng;
+    var lat1 = coords1.lat;
+  
+    var lon2 = coords2.lng;
+    var lat2 = coords2.lat;
+  
+    var R = 6371; // km
+    if (isMiles) R = 3959; // miles
+  
+    var x1 = lat2 - lat1;
+    var dLat = toRad(x1);
+    var x2 = lon2 - lon1;
+    var dLon = toRad(x2)
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+  
+    return d;
+  }
+  
 
-const HomePage: React.FC = () => {
+  const HomePage = () => {
     const [coordinates, setCoordinates] = useState({ lat: 40.0150, lng: -105.2705 });
     const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]);
     const [loading, setLoading] = useState(false);
     const [center, setCenter] = useState({ lat: -3.745, lng: -38.523 });
     const [visibleStations, setVisibleStations] = useState<{ [title: string]: boolean }>({});
     const [stationCounts, setStationCounts] = useState<Array<{ title: string; count: number }>>([]);
+    const [averageDistance, setAverageDistance] = useState(0);
+
+    const updateAverageDistance = () => {
+      if (chargingStations.length > 0) {
+        const totalDistance = chargingStations.reduce((acc, station) => {
+          return acc + haversineDistance({ lat: coordinates.lat, lng: coordinates.lng }, { lat: station.position.lat, lng: station.position.lng });
+        }, 0);
+        setAverageDistance(totalDistance / chargingStations.length);
+      }
+    };
+
+    useEffect(() => {
+      updateAverageDistance();
+    }, [chargingStations, coordinates]);
+
     const imageMap = {
       "ChargePoint" : "images/station_logos/ChargePoint Logo.jpeg",
       "EVmatch" : "images/station_logos/EVmatch logo.jpg",
@@ -120,6 +87,8 @@ const HomePage: React.FC = () => {
       "LADWP" : "images/station_logos/LA.webp",
     }
   
+
+    
     useEffect(() => {
       const counts = new Map();
       const visibility: VisibilityMap = {};
@@ -157,35 +126,44 @@ const HomePage: React.FC = () => {
     useEffect(() => {
       setCenter({ lat: (coordinates.lat), lng: (coordinates.lng) });
     }, [coordinates]);
-  
+    const [key, setKey] = useState(Math.random());
+
+    useEffect(() => {
+        // Whenever the component mounts, set a new key
+        setKey(Math.random());
+      }, []);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setCoordinates({ ...coordinates, [e.target.name]: parseFloat(e.target.value) });
     };
   
    
-  
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       setLoading(true);
-  
+    
       const apiKey = 'n1uBlB9jeB_7i-xw0I-NF2ZNxJaEA5ex5EqB2rGRm8A';
       const category = '700-7600-0322,700-7600-0325'; // EV charging station and EV battery swap station
       const { lat, lng } = coordinates;
       const url = `https://browse.search.hereapi.com/v1/browse?at=${lat},${lng}&limit=20&categories=${category}&apiKey=${apiKey}`;
+    
       try {
         const response = await fetch(url);
         const data = await response.json();
-        setChargingStations(data.items);
-        setCenter({ lat, lng }); // Update map center to user input
+        setChargingStations(data.items); // This will trigger the useEffect to recalculate distance
+        setCenter({ lat, lng }); // Optionally update the map center
       } catch (error) {
         console.error('Error fetching data: ', error);
+        // Optionally handle error state here
       } finally {
         setLoading(false);
       }
     };
+    
   
     return (
       <div className="container my-5">
+
         <section className="userLocationInputSection">
           <h1 className="mb-4">Determine Your Electric <span>Car Eligibility</span></h1>
   
@@ -262,11 +240,14 @@ const HomePage: React.FC = () => {
               ))}
             </div>
             {/* Google Map */}
-            <LoadScript googleMapsApiKey="AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc">
+            <LoadScript googleMapsApiKey="AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc"
+                  key={key}
+                  >
             <GoogleMap
               mapContainerStyle={mapContainerStyle}
               center={center}
               zoom={14} 
+              
             >
               {chargingStations.filter(station => visibleStations[station.title]).map(station => (
                 <Marker

@@ -1,0 +1,92 @@
+[
+  {
+    "year": 2012,
+    "make": "Acura",
+    "model": "MDX AWD",
+    "vehicle_type": "Z",
+    "miles_per_gallon": 21,
+    "emissions_per_km": 304,
+    "emissions_per_mile": 189
+  },
+  {
+    "year": 2012,
+    "make": "Acura",
+    "model": "RDX AWD Turbo",
+    "vehicle_type": "Z",
+    "miles_per_gallon": 24,
+    "emissions_per_km": 274,
+    "emissions_per_mile": 170
+  },
+  {
+    "year": 2012,
+    "make": "Acura",
+    "model": "RL AWD",
+    "vehicle_type": "Z",
+    "miles_per_gallon": 24,
+    "emissions_per_km": 274,
+    "emissions_per_mile": 170
+  },
+  {
+    "year": 2012,
+    "make": "Acura",
+    "model": "TL",
+    "vehicle_type": "Z",
+    "miles_per_gallon": 28,
+    "emissions_per_km": 232,
+    "emissions_per_mile": 144
+  },
+  {
+    "year": 2012,
+    "make": "Acura",
+    "model": "TL AWD",
+    "vehicle_type": "Z",
+    "miles_per_gallon": 25,
+    "emissions_per_km": 255,
+    "emissions_per_mile": 158
+  },
+  {
+    "year": 2012,
+    "make": "Acura",
+    "model": "TSX",
+    "vehicle_type": "Z",
+    "miles_per_gallon": 31,
+    "emissions_per_km": 212,
+    "emissions_per_mile": 132
+  },
+  {
+    "year": 2012,
+    "make": "Acura",
+    "model": "ZDX AWD",
+    "vehicle_type": "Z",
+    "miles_per_gallon": 23,
+    "emissions_per_km": 288,
+    "emissions_per_mile": 179
+  },
+  {
+    "year": 2012,
+    "make": "Aston Martin",
+    "model": "DB9",
+    "vehicle_type": "Z",
+    "miles_per_gallon": 18,
+    "emissions_per_km": 352,
+    "emissions_per_mile": 219
+  },
+  {
+    "year": 2012,
+    "make": "Aston Martin",
+    "model": "DBS",
+    "vehicle_type": "Z",
+    "miles_per_gallon": 17,
+    "emissions_per_km": 389,
+    "emissions_per_mile": 242
+  },
+  {
+    "year": 2012,
+    "make": "Aston Martin",
+    "model": "Rapide",
+    "vehicle_type": "Z",
+    "miles_per_gallon": 18,
+    "emissions_per_km": 361,
+    "emissions_per_mile": 224
+  }
+]
