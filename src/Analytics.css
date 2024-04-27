@@ -1,0 +1,19 @@
+/* ChargingEfficiencyChart.css */
+.charging-efficiency-chart {
+    width: 100%; /* Adjust width as needed */
+    height: 100px; /* Adjust height as needed */
+}
+
+.chargingEfficiencyContainer {
+    margin-top: 200px;
+    display: flex;
+}
+  
+.dashboardHeader {
+    flex: 1;
+    margin-left: 12%;
+  }
+  
+  .chartContainer {
+    flex: 1;
+  }

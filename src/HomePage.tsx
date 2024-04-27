@@ -43,7 +43,6 @@ const libraries = ['places'];
     return d;
   }
   
-
   const HomePage = () => {
     const [coordinates, setCoordinates] = useState({ lat: 40.0150, lng: -105.2705 });
     const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]);
