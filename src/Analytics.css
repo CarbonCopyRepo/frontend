@@ -7,13 +7,89 @@
 .chargingEfficiencyContainer {
     margin-top: 200px;
     display: flex;
+    background-color: #e8e8e8;
+    border-radius: 25px;
+    padding: 40px;
+    padding-bottom: 10px;
+    width: 95%;
+    display: flex;          /* Enable Flexbox */
+    align-items: flex-start; /* Align items vertically from the start */
+    justify-content: space-around; /* Distribute extra space around the items */
+    
 }
   
+main {
+    width: 100%;
+}
+
+.analyticsContainer {
+    display: flex;           /* Enables flexbox */
+    align-items: center;     /* Centers children vertically */
+    height: 100vh;           /* Optional: sets the height of the parent */
+    justify-content: space-around; /* Distribute extra space around the items */
+    flex-direction: column;
+}
+
+.chargingEfficiencySection {
+    flex: 3;  /* Takes up twice as much space as the list */
+    padding: 20px; /* Optional: for internal spacing */
+}
+
+.highEfficiencyList {
+    list-style: none;
+
+    flex: 2;  /* Takes up half the space of chargingEfficiencySection */
+    background-color: #f8f9fa; /* Light grey background */
+    border-radius: 8px;        /* Rounded corners */
+    padding: 20px;             /* Padding around the content */
+    overflow-y: auto;          /* Enable vertical scrolling */
+    max-height: 430px;         /* Optional: Adjust based on your design needs */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds subtle shadow for depth */
+}
+
 .dashboardHeader {
     flex: 1;
-    margin-left: 12%;
+    margin-left: 8%;
+    padding: 10px;
+    padding-left: 0;
   }
   
   .chartContainer {
     flex: 1;
   }
+
+
+.highEfficiencyList ul {
+    list-style: none; /* Removes bullet points */
+    margin: 0;
+    padding: 0;
+}
+
+.highEfficiencyList li {
+    padding: 10px;                    /* Padding inside each list item */
+    border-bottom: 1px solid #dee2e6; /* Adds a separator line between items */
+}
+
+.highEfficiencyList li:nth-child(odd) {
+    background-color: #f0f0f0; /* Lighter shade for odd items */
+}
+
+.highEfficiencyList li:nth-child(even) {
+    background-color: #e9ecef; /* Slightly darker shade for even items */
+}
+
+.highEfficiencyList li:last-child {
+    border-bottom: none; /* Removes the border from the last item */
+}
+
+.chargingEfficiencySection {
+    flex: 2;  /* Takes up the space allotted by the parent flex setting */
+    align-items: center;  /* Centers the chart vertically */
+    justify-content: center; /* Centers the chart horizontally */
+}
+
+.charging-efficiency-chart {
+    width: 100%; /* Adjust width as needed */
+    height: auto; /* Adjust to 'auto' or set a minimum height */
+    flex-grow: 1; /* Allows the chart to expand to fill the container */
+}
