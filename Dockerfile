@@ -1,11 +1,15 @@
 FROM node:18-alpine
 
-COPY public/ /public
-COPY src/ /src
-COPY package.json /
+WORKDIR /app
+
+COPY package.json .
 
 RUN npm install
 
-CMD ["npm", "build"]
+COPY . .
 
-EXPOSE 3000
+RUN npm run build
+
+EXPOSE 8080
+
+CMD [ "npm", "run", "preview" ]
