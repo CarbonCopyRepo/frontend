@@ -1,9 +1,8 @@
 import './App.css';
-import NavBar from './NavBar'; // Adjust path if different
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import AnalyticsPage from './Analytics';
-import HomePage from './HomePage';
-
+import NavBar from './components/NavBar'; // Adjust path if different
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AnalyticsPage from './routes/Analytics';
+import HomePage from './routes/HomePage';
 
 function App() {
   return (

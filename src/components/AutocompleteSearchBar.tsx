@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 interface AutocompleteSearchBarProps {
   onLocationSelect: (lat: number, lng: number) => void;
@@ -10,10 +10,10 @@ function AutocompleteSearchBar({ onLocationSelect }: AutocompleteSearchBarProps)
 
   useEffect(() => {
     if (autocompleteInput.current && !autocomplete.current && window.google) {
-      autocomplete.current = new window.google.maps.places.Autocomplete(
-        autocompleteInput.current,
-        { types: ['address'], componentRestrictions: { country: "us" } }
-      );
+      autocomplete.current = new window.google.maps.places.Autocomplete(autocompleteInput.current, {
+        types: ['address'],
+        componentRestrictions: { country: 'us' },
+      });
 
       autocomplete.current.addListener('place_changed', onPlaceChanged);
     }
@@ -29,13 +29,7 @@ function AutocompleteSearchBar({ onLocationSelect }: AutocompleteSearchBarProps)
     }
   }
 
-  return (
-    <input
-      ref={autocompleteInput}
-      type="text"
-      placeholder="Enter an address"
-    />
-  );
+  return <input ref={autocompleteInput} type="text" placeholder="Enter an address" />;
 }
 
 export default AutocompleteSearchBar;
