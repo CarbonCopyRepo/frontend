@@ -15,11 +15,38 @@
     display: flex;          /* Enable Flexbox */
     align-items: flex-start; /* Align items vertically from the start */
     justify-content: space-around; /* Distribute extra space around the items */
-    
 }
-  
+ 
+.costChartContainer {
+    margin-top: 40px;
+    display: flex;
+    border-radius: 25px;
+    padding: 40px;
+    background-color: #e8e8e8;
+
+    padding-bottom: 10px;
+    width: 95%;
+    display: flex;          /* Enable Flexbox */
+    align-items: flex-start; /* Align items vertically from the start */
+    justify-content: space-around; /* Distribute extra space around the items */
+}
+ 
+.costChartContainerGasoline {
+    margin-top: 40px;
+    display: flex;
+    background-color: #e8e8e8;
+    border-radius: 25px;
+    padding: 40px;
+    padding-bottom: 10px;
+    width: 95%;
+    display: flex;          /* Enable Flexbox */
+    align-items: flex-start; /* Align items vertically from the start */
+    justify-content: space-around; /* Distribute extra space around the items */
+}
+
 main {
     width: 100%;
+    background-size: cover; /* Cover the entire background */
 }
 
 .analyticsContainer {
@@ -37,7 +64,6 @@ main {
 
 .highEfficiencyList {
     list-style: none;
-
     flex: 2;  /* Takes up half the space of chargingEfficiencySection */
     background-color: #f8f9fa; /* Light grey background */
     border-radius: 8px;        /* Rounded corners */

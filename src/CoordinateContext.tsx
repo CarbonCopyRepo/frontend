@@ -23,4 +23,4 @@ const defaultState: CoordinatesContextType = {
   setCoordinates: () => {},
 };
 
-export const CoordinateContext = createContext;
+const CoordinateContext = createContext;
