@@ -5,16 +5,12 @@ const DistanceContext = createContext(null);
 
 // Provider component
 export const DistanceProvider = ({ children }) => {
-    const [averageDistance, setAverageDistance] = useState(0);
+  const [averageDistance, setAverageDistance] = useState(0);
 
-    // Context value that will be provided to the components
-    const value = { averageDistance, setAverageDistance };
+  // Context value that will be provided to the components
+  const value = { averageDistance, setAverageDistance };
 
-    return (
-        <DistanceContext.Provider value={value}>
-            {children}
-        </DistanceContext.Provider>
-    );
+  return <DistanceContext.Provider value={value}>{children}</DistanceContext.Provider>;
 };
 
 // Custom hook for using this context

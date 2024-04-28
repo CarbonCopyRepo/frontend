@@ -47,14 +47,12 @@ const HomePage: React.FC = () => {
     LADWP: 'images/station_logos/LA.webp',
   };
 
-
-
   useEffect(() => {
     const counts = new Map();
     const visibility: VisibilityMap = {};
 
     chargingStations.forEach((station) => {
-      let count = counts.get(station.title) || 0;
+      const count = counts.get(station.title) || 0;
       counts.set(station.title, count + 1);
       visibility[station.title] = true; // Default all titles to visible
     });
@@ -67,7 +65,7 @@ const HomePage: React.FC = () => {
     const lowerCaseTitle = title.toLowerCase();
     const keys = Object.keys(imageMap) as (keyof typeof imageMap)[];
 
-    for (let key of keys) {
+    for (const key of keys) {
       if (lowerCaseTitle.includes(key.toLowerCase())) {
         return imageMap[key]; // TypeScript understands that key is a valid key of imageMap
       }
@@ -81,7 +79,6 @@ const HomePage: React.FC = () => {
       [title]: !prevStations[title], // Toggle visibility based on title
     }));
   };
-
 
   useEffect(() => {
     setCenter({ lat: coordinates.lat, lng: coordinates.lng });
@@ -190,10 +187,10 @@ const HomePage: React.FC = () => {
         </div>
         {/* Google Map */}
         <LoadScript googleMapsApiKey="AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc">
-        <script
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc&callback=initAutocomplete&libraries=places&v=weekly"
-          defer
-        ></script>
+          <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc&callback=initAutocomplete&libraries=places&v=weekly"
+            defer
+          ></script>
           <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={14}>
             {chargingStations
               .filter((station) => visibleStations[station.title])
@@ -209,8 +206,6 @@ const HomePage: React.FC = () => {
           </GoogleMap>
         </LoadScript>
         <div id="map"></div>
-
-
       </section>
     </div>
   );
