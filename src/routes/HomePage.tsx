@@ -47,6 +47,8 @@ const HomePage: React.FC = () => {
     LADWP: 'images/station_logos/LA.webp',
   };
 
+
+
   useEffect(() => {
     const counts = new Map();
     const visibility: VisibilityMap = {};
@@ -79,6 +81,7 @@ const HomePage: React.FC = () => {
       [title]: !prevStations[title], // Toggle visibility based on title
     }));
   };
+
 
   useEffect(() => {
     setCenter({ lat: coordinates.lat, lng: coordinates.lng });
@@ -133,6 +136,7 @@ const HomePage: React.FC = () => {
               onChange={handleChange}
               placeholder="Longitude"
             />
+
             <div className="input-group-append">
               <button className="btn btn-primary" type="submit" disabled={loading}>
                 {loading ? 'Loading...' : 'Find Stations'}
@@ -186,6 +190,10 @@ const HomePage: React.FC = () => {
         </div>
         {/* Google Map */}
         <LoadScript googleMapsApiKey="AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc">
+        <script
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc1szeipPrcOZQxx0pMROa4ZfRKY_Sylc&callback=initAutocomplete&libraries=places&v=weekly"
+          defer
+        ></script>
           <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={14}>
             {chargingStations
               .filter((station) => visibleStations[station.title])
@@ -200,6 +208,9 @@ const HomePage: React.FC = () => {
             <Marker position={center} icon={customMarkerIcon} />
           </GoogleMap>
         </LoadScript>
+        <div id="map"></div>
+
+
       </section>
     </div>
   );
