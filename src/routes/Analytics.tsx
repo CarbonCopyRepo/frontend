@@ -1,8 +1,12 @@
 import React from 'react';
+import { CoordinatesContextType } from '@/CoordinateContext';
 import electricCarData from '../data/ev.json';
 import gasolineCarData from '../data/gasoline_vehicles.json'
 import '../Analytics.css';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, LineChart, Legend, Line} from 'recharts';
+
+
+
 
 interface ElectricCarData {
     year: number;
@@ -25,11 +29,9 @@ interface ElectricCarData {
     emissions_per_mile: number;
   }
 
-  
+
 
 const mpgToLper100km = (mpg : number) => 235.214583 / mpg;  // 235.214583 is the conversion factor from mpg to L/100km
-
-
 
 const AnalyticsPage: React.FC = () => {
 
@@ -67,19 +69,25 @@ const AnalyticsPage: React.FC = () => {
   };
   
   const chargingEfficiencyData = prepareData(electricCarData, gasolineCarData);
+  const evData = chargingEfficiencyData.filter((item) => item.type === 'EV');
+  const gasolineData = chargingEfficiencyData.filter((item) => item.type === 'Gas');
 
     const ChargingEfficiencyChart: React.FC<{ data: any[] }> = ({ data }) => {
         return (
           <ResponsiveContainer width={1000} height={400}>
-          <BarChart data={data} margin={{ top: 0, right: 30, left: 20, bottom: 0 }}>
+            <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="combinedLabel" />
-              <YAxis label={{ value: "Efficiency (L/100km for Gas, km/kWh for EV)", angle: -90, position: 'insideLeft' }} />
+              <XAxis  />
+              <YAxis label={{ value: 'Efficiency', angle: -90, position: 'Left'}} />
               <Tooltip />
               <Legend />
-              <Bar dataKey="efficiency" fill="#F75B20" name="EV" />
-          </BarChart>
-        </ResponsiveContainer>
+              {/* Line for EV data */}
+              {/* Line for Gasoline data */}
+              <Line type="linear" dataKey="efficiency" data={gasolineData} name="Gasoline (km/kWh)" stroke="#0088FF" />
+              <Line type="linear" dataKey="efficiency" data={evData} name="EV (L/100km)" stroke = "#F75B20" />
+
+            </LineChart>
+          </ResponsiveContainer>
         );
       };
 
