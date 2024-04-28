@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import '../App.css';
 import type { VisibilityMap } from '../types/types';
+import { CoordinatesContext } from '../App';
+const customMarkerIcon = 'images/markerIcon.svg';
 
-<script
-  src="https://maps.googleapis.com/maps/api/js?key=NF2ZNxJaEA5ex5EqB2rGRm8A&callback=initMap&v=weekly&libraries=marker"
-  defer
-></script>;
-
-const libraries = ['places'];
+// Not used... Keeping just in case?
+//const libraries = ['places'];
+//const center = { lat: -3.745, lng: -38.523 };
 const mapContainerStyle = {
   width: '700px',
   height: '350px',
@@ -16,11 +15,10 @@ const mapContainerStyle = {
   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
   overflow: 'hidden', // Important for applying border-radius to a map
 };
-const center = { lat: -3.745, lng: -38.523 };
-const customMarkerIcon = 'images/markerIcon.svg';
 
 const HomePage: React.FC = () => {
-  const [coordinates, setCoordinates] = useState({ lat: 40.015, lng: -105.2705 });
+  const { coordinates, setCoordinates } = useContext(CoordinatesContext);
+
   const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]);
   const [loading, setLoading] = useState(false);
   const [center, setCenter] = useState({ lat: -3.745, lng: -38.523 });
@@ -48,11 +46,20 @@ const HomePage: React.FC = () => {
   };
 
   useEffect(() => {
+    navigator.geolocation.getCurrentPosition((location) =>
+      setCoordinates({
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+      })
+    );
+  });
+
+  useEffect(() => {
     const counts = new Map();
     const visibility: VisibilityMap = {};
 
     chargingStations.forEach((station) => {
-      let count = counts.get(station.title) || 0;
+      const count = counts.get(station.title) || 0;
       counts.set(station.title, count + 1);
       visibility[station.title] = true; // Default all titles to visible
     });
@@ -60,6 +67,10 @@ const HomePage: React.FC = () => {
     setStationCounts(Array.from(counts).map(([title, count]) => ({ title, count })));
     setVisibleStations(visibility);
   }, [chargingStations]);
+
+  useEffect(() => {
+    setCenter(coordinates);
+  }, [coordinates]);
 
   function getImageForTitle(title: string): string {
     const lowerCaseTitle = title.toLowerCase();
@@ -80,10 +91,6 @@ const HomePage: React.FC = () => {
     }));
   };
 
-  useEffect(() => {
-    setCenter({ lat: coordinates.lat, lng: coordinates.lng });
-  }, [coordinates]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCoordinates({ ...coordinates, [e.target.name]: parseFloat(e.target.value) });
   };
@@ -92,7 +99,7 @@ const HomePage: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    const apiKey = 'n1uBlB9jeB_7i-xw0I-NF2ZNxJaEA5ex5EqB2rGRm8A';
+    const apiKey = process.env.HERE_API_KEY;
     const category = '700-7600-0322,700-7600-0325'; // EV charging station and EV battery swap station
     const { lat, lng } = coordinates;
     const url = `https://browse.search.hereapi.com/v1/browse?at=${lat},${lng}&limit=20&categories=${category}&apiKey=${apiKey}`;
