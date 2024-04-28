@@ -67,29 +67,3 @@ export type VisibilityMap = {
 export type ImageMap = {
   [key: string]: string;
 };
-
-export type ElectricVehicle = {
-  year: number;
-  make: string;
-  model: string;
-  energy_per_100_km: number;
-  vehicle_type: string;
-  emissions_per_km: number;
-  emissions_per_mile: number;
-};
-
-export type GasolineVehicle = {
-  year: number;
-  make: string;
-  model: string;
-  vehicle_type: string;
-  miles_per_gallon: number;
-  emissions_per_km: number;
-  emissions_per_mile: number;
-};
-
-export type EmissionsChartData = {
-  vehicle_type: string;
-  year: number;
-  emmissions_per_miles: number;
-};

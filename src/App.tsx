@@ -1,4 +1,3 @@
-// Import necessary modules and components
 import './App.css';
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -8,14 +7,9 @@ import AnalyticsPage from './routes/Analytics';
 import HomePage from './routes/HomePage';
 import Forecasts from './routes/Forecasts';
 
-// Define default coordinates
 const defaultPos: Position = { lat: 40.015, lng: -105.2705 };
 
-// Create CoordinatesContext
-export const CoordinatesContext = createContext<{
-  coordinates: Position;
-  setCoordinates: React.Dispatch<{ lat: number; lng: number }>;
-}>({ coordinates: defaultPos, setCoordinates: () => {} });
+export const CoordinatesContext = createContext(defaultPos);
 
 function App() {
   const [coordinates, setCoordinates] = useState(defaultPos);

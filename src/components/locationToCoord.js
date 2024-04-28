@@ -1,4 +1,4 @@
-export default function initAutocomplete() {
+function initAutocomplete() {
   var input = document.getElementById('locationInput');
   var autocomplete = new google.maps.places.Autocomplete(input);
 
