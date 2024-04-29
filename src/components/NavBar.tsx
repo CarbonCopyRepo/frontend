@@ -1,11 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Navbar } from 'flowbite-react';
 
-const NavBar: React.FC = () => {
+export default function NavBar() {
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg">
-        <a className="navbar-brand" href="#">
+    <Navbar fluid className="absolute top-0 w-full bg-slate-800 top-0">
+      <Navbar.Brand>
+        <a href="/" className="mr-1">
           <img
             id="navbar_logo"
             src="images/favicon.svg"
@@ -13,29 +12,23 @@ const NavBar: React.FC = () => {
             alt="Logo"
           />
         </a>
-
-        <div className="links" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item active">
-              <Link to="/" className="nav-link">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/analytics" className="nav-link">
-                Analytics
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/forecasts" className="nav-link">
-                Forecasts
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
+        <a
+          href="/"
+          className="self-center whitespace-nowrap text-xl font-semibold hover:text-white text-white"
+        >
+          Carbon Copy
+        </a>
+      </Navbar.Brand>
+      <Navbar.Toggle />
+      <Navbar.Collapse>
+        <Navbar.Link href="/" active>
+          Home
+        </Navbar.Link>
+        <Navbar.Link href="/analytics">Analytics</Navbar.Link>
+        <Navbar.Link href="/consumption">Consumption</Navbar.Link>
+        <Navbar.Link href="/emissions">Emissions</Navbar.Link>
+        <Navbar.Link href="/forecasts">Forecasts</Navbar.Link>
+      </Navbar.Collapse>
+    </Navbar>
   );
-};
-
-export default NavBar;
+}

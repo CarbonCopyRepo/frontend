@@ -6,6 +6,7 @@ import type { Position } from './types/types';
 import AnalyticsPage from './routes/Analytics';
 import HomePage from './routes/HomePage';
 import Forecasts from './routes/Forecasts';
+import Consumption from './routes/Consumption';
 
 const defaultPos: Position = { lat: 40.015, lng: -105.2705 };
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/forecasts" element={<Forecasts />} /> {/* Add the Forecasts route */}
+          <Route path="/consumption" element={<Consumption />} />
         </Routes>
       </CoordinatesContext.Provider>
     </Router>
