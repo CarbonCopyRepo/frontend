@@ -44,6 +44,19 @@
     justify-content: space-around; /* Distribute extra space around the items */
 }
 
+.yearlyConsumptionChart {
+    margin-top: 200px;
+    display: flex;
+    background-color: #e8e8e8;
+    border-radius: 25px;
+    padding: 40px;
+    padding-bottom: 10px;
+    width: 95%;
+    display: flex;          /* Enable Flexbox */
+    align-items: flex-start; /* Align items vertically from the start */
+    justify-content: space-around; /* Distribute extra space around the items */
+}
+
 main {
     width: 100%;
     background-size: cover; /* Cover the entire background */
