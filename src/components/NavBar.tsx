@@ -5,6 +5,7 @@ const NavBar: React.FC = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg">
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a className="navbar-brand" href="#">
           <img
             id="navbar_logo"
@@ -13,6 +14,7 @@ const NavBar: React.FC = () => {
             alt="Logo"
           />
         </a>
+        <h2 style={{ color: 'white' }}>EVI Hub</h2>
 
         <div className="links" id="navbarNav">
           <ul className="navbar-nav">
@@ -27,8 +29,8 @@ const NavBar: React.FC = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/forecasts" className="nav-link">
-                Forecasts
+              <Link to="/emissions" className="nav-link">
+                Emissions
               </Link>
             </li>
           </ul>

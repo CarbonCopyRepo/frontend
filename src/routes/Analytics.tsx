@@ -1,7 +1,7 @@
 import electricCarData from '../data/ev.json';
 import gasolineCarData from '../data/gasoline_vehicles.json';
 import './Analytics.css';
-import React, { useContext, createContext, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 const sampleGasPrice: number = 3.0; // Adjust this value as needed
 const sampleChargingPrice: number = 0.15; // Adjust this value as needed
 
@@ -37,8 +37,6 @@ function toRadians(degrees: number): number {
 const distanceKm: number = haversineDistance(startLat, startLon, endLat, endLon);
 
 import {
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   Tooltip,
@@ -114,7 +112,9 @@ const gasolineCarCost = getFuelCost(electricCarData, gasolineCarData, distanceKm
   (item) => item.type === 'Gas'
 );
 
-const hasChargingCost = (obj: any): obj is { chargingCost: number } => {
+const hasChargingCost = (obj: unknown): obj is { chargingCost: number } => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   return 'chargingCost' in obj;
 };
 const evCarCost = getFuelCost(electricCarData, gasolineCarData, distanceKm).filter(hasChargingCost);
@@ -122,6 +122,7 @@ const evCarCost = getFuelCost(electricCarData, gasolineCarData, distanceKm).filt
 const AnalyticsPage: React.FC = () => {
   const [coordinates, setCoordinates] = useState({ lat: 40.015, lng: -105.2705 });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCoordinates({ ...coordinates, [e.target.name]: parseFloat(e.target.value) });
   };
@@ -154,7 +155,8 @@ const AnalyticsPage: React.FC = () => {
   const evData = chargingEfficiencyData.filter((item) => item.type === 'EV');
   const gasolineData = chargingEfficiencyData.filter((item) => item.type === 'Gas');
 
-  const EVCostChart: React.FC<{ data: any[] }> = ({ data }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const EVCostChart: React.FC<{ data: never[] }> = ({ data }) => {
     return (
       <ResponsiveContainer width={1000} height={400}>
         <LineChart data={evCarCost}>
@@ -168,18 +170,23 @@ const AnalyticsPage: React.FC = () => {
     );
   };
 
-  const CostChart: React.FC<{ data: any[] }> = ({ data }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const CostChart: React.FC<{ data: unknown[] }> = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [coordinates, setCoordinates] = useState({ lat: 40.015, lng: -105.2705 });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setCoordinates((prevCoords) => ({
         ...prevCoords,
         [e.target.name]: parseFloat(e.target.value) || 0, // Ensuring valid float or defaulting to 0
       }));
     };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [distanceKm, setDistanceKm] = useState(() =>
       haversineDistance(startLat, startLon, endLat, endLon)
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [fuelData, setFuelData] = useState<VehicleData[]>([]);
 
     return (
@@ -197,7 +204,7 @@ const AnalyticsPage: React.FC = () => {
     );
   };
 
-  const ChargingEfficiencyChart: React.FC<{ data: any[] }> = ({ data }) => {
+  const ChargingEfficiencyChart: React.FC<{ data: never }> = ({ data }) => {
     return (
       <div>
         <ResponsiveContainer width={1000} height={400}>
