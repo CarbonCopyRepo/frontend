@@ -3,7 +3,7 @@ export const getYearlyConsumptionModelBTU = async (type, make, model, miles) => 
 
   if (miles) {
     response = await fetch(
-      `http://localhost:3000/api/consumption/yearlyByMake?make=${make}&model=${model}&vehicleType=${type}&miles={miles}`
+      `http://localhost:3000/api/consumption/yearlyByMake?make=${make}&model=${model}&vehicleType=${type}&miles=${miles}`
     );
   } else {
     response = await fetch(
