@@ -7,8 +7,8 @@ export default function VehicleMakes(props: {
   return (
     <div className="w-1/5">
       <Label className="w-max">
+        Vehicle Type:
         <Select onChange={(e) => props.setSelectedType(e.target.value)}>
-          <option value="">Select Type</option>
           <option value="X">Gasoline Car (X)</option>
           <option value="Z">Premium (Z)</option>
           <option value="D">Diesel (D)</option>
