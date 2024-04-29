@@ -9,6 +9,7 @@ import Emissions from './routes/Emissions';
 import type { Position } from './types/types';
 
 import './App.css';
+import Consumption from './routes/Consumption';
 
 const defaultPos: Position = { lat: 40.015, lng: -105.2705 };
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/emissions" element={<Emissions />} />
+          <Route path="/consumption" element={<Consumption />} />
         </Routes>
       </CoordinatesContext.Provider>
     </Router>
