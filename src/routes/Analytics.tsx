@@ -2,10 +2,31 @@ import electricCarData from '../data/ev.json';
 import gasolineCarData from '../data/gasoline_vehicles.json';
 import './Analytics.css';
 import React, { useContext, createContext, useState, useEffect } from 'react';
+import VehicleMakes from '../components/dropdowns/VehicleMakes';
+import { getMakesForVehicleType } from '../apiCalls/getMakesForVehicleType';
+import type { Make, ElectricCarData, GasolineCarData, VehicleData } from '../types/vehicle.types';
+import { Select, Label } from 'flowbite-react';
+import { CoordinatesContext } from '../App';
+import {
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer,
+  LineChart,
+  Legend,
+  Line,
+} from 'recharts';
+
+interface YearlyConsumption {
+  year: number;
+  consumptionZ?: number;
+  consumptionB?: number;
+  consumptionX?: number;
+}
+
 const sampleGasPrice: number = 3.0; // Adjust this value as needed
 const sampleChargingPrice: number = 0.15; // Adjust this value as needed
-
-
 // COORDINATES TO BE CHANGED DYNAMICALLY THROUGH COORDINATECONTEXT
 const startLat: number = 40.015;
 const startLon: number = -105.2705;
@@ -36,57 +57,6 @@ function toRadians(degrees: number): number {
   return (degrees * Math.PI) / 180;
 }
 const distanceKm: number = haversineDistance(startLat, startLon, endLat, endLon);
-
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  ResponsiveContainer,
-  LineChart,
-  Legend,
-  Line,
-} from 'recharts';
-
-interface ElectricCarData {
-  year: number;
-  make: string;
-  model: string;
-  energy_per_100_km: number;
-  vehicle_type: string;
-  emissions_per_km: number;
-  emissions_per_mile: number;
-  battery_capacity_kWh?: number;
-}
-
-interface GasolineCarData {
-  year: number;
-  make: string;
-  model: string;
-  vehicle_type: string;
-  miles_per_gallon: number;
-  emissions_per_km: number;
-  emissions_per_mile: number;
-}
-
-// interface YearlyConsumptionTypeZ {
-//   year: number;
-//   consumptionZ : number;
-// }
-// interface YearlyConsumptionTypeB {
-//   year: number;
-//   consumptionB : number;
-// }
-
-interface YearlyConsumption {
-  year: number;
-  consumptionZ?: number;
-  consumptionB?: number;
-  consumptionX?: number;
-}
-type VehicleData = ElectricCarData | GasolineCarData;
 
 const calculateChargingEfficiency = (carData: ElectricCarData): number => {
   // Calculate charging efficiency (km/kWh)
@@ -131,11 +101,33 @@ const hasChargingCost = (obj: any): obj is { chargingCost: number } => {
 const evCarCost = getFuelCost(electricCarData, gasolineCarData, distanceKm).filter(hasChargingCost);
 
 const AnalyticsPage: React.FC = () => {
-  const [coordinates, setCoordinates] = useState({ lat: 40.015, lng: -105.2705 });
+  // State
+  const [makes, setMakes] = useState<Array<Make>>([{ make: '' }]);
+  const [selectedMake, setSelectedMake] = useState('');
+  const [selectedModel, setSelectedModel] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCoordinates({ ...coordinates, [e.target.name]: parseFloat(e.target.value) });
+  const [distanceKm, setDistanceKm] = useState(() =>
+    haversineDistance(startLat, startLon, endLat, endLon)
+  );
+  const [fuelData, setFuelData] = useState<VehicleData[]>([]);
+
+  const handleMakeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedMake(event.target.value);
+    setSelectedModel('');
   };
+
+  const handleModelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedModel(event.target.value);
+  };
+
+  useEffect(() => {
+    const setMakeData = async () => {
+      const makes = await getMakesForVehicleType('X');
+      setMakes(makes.data);
+    };
+
+    setMakeData();
+  }, []);
 
   const prepareData = (evData: ElectricCarData[], gasData: GasolineCarData[]) => {
     const evEfficiencyData = evData
@@ -162,8 +154,16 @@ const AnalyticsPage: React.FC = () => {
   };
 
   const chargingEfficiencyData = prepareData(electricCarData, gasolineCarData);
+
+  // Consts
   const evData = chargingEfficiencyData.filter((item) => item.type === 'EV');
   const gasolineData = chargingEfficiencyData.filter((item) => item.type === 'Gas');
+
+  const carModels = {
+    'Make A': ['Model A1', 'Model A2'],
+    'Make B': ['Model B1', 'Model B2'],
+    'Make C': ['Model C1', 'Model C2'],
+  };
 
   const EVCostChart: React.FC<{ data: any[] }> = ({ data }) => {
 
@@ -182,19 +182,6 @@ const AnalyticsPage: React.FC = () => {
   };
 
   const CostChart: React.FC<{ data: any[] }> = ({ data }) => {
-    const [coordinates, setCoordinates] = useState({ lat: 40.015, lng: -105.2705 });
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCoordinates((prevCoords) => ({
-        ...prevCoords,
-        [e.target.name]: parseFloat(e.target.value) || 0, // Ensuring valid float or defaulting to 0
-      }));
-    };
-    const [distanceKm, setDistanceKm] = useState(() =>
-      haversineDistance(startLat, startLon, endLat, endLon)
-    );
-    const [fuelData, setFuelData] = useState<VehicleData[]>([]);
-
     return (
       <div>
         <ResponsiveContainer width={1000} height={400}>
@@ -234,8 +221,6 @@ const AnalyticsPage: React.FC = () => {
             <YAxis label={{ value: 'Efficiency', angle: -90, position: 'Left' }} />
             <Tooltip />
             <Legend />
-            {/* Line for EV data */}
-            {/* Line for Gasoline data */}
             <Line
               type="linear"
               dataKey="efficiency"
@@ -309,18 +294,54 @@ const AnalyticsPage: React.FC = () => {
 
   return (
     <div className="analyticsContainer">
-
-
-      <div className="yearlyConsumptionChart">
+      <div className="chargingEfficiencyContainer">
         <div className="chargingEfficiencySection">
           <div className="dashboardHeader">
             <h4>Yearly Consumption (in BTUs) for Different Vehicle Types</h4>
           </div>
           <div className="chartContainer">
+            <label htmlFor="carModel">Car Model:</label>
+            <select
+              id="carModel"
+              value={selectedModel}
+              onChange={handleModelChange}
+              disabled={!selectedMake}
+            >
+              <option value="">Select Model</option>
+              {selectedMake &&
+                carModels[selectedMake as keyof typeof carModels].map((model) => (
+                  <option key={model} value={model}>
+                    {model}
+                  </option>
+                ))}
+            </select>
+            <div className="w-1/5">
+              <Label htmlFor="make" value="Make" />
+              <Select value={selectedMake} onChange={handleMakeChange} disabled={!selectedModel}>
+                {makes.map((make) => {
+                  return <option key={make.make}>{make.make}</option>;
+                })}
+              </Select>
+            </div>
+            <ChargingEfficiencyChart data={chargingEfficiencyData} />
+          </div>
+        </div>
+      </div>
+
+      <div className="chargingEfficiencyContainer">
+        <div className="chargingEfficiencySection">
+          <div className="dashboardHeader">
+            <h4>Yearly Consumption (in BTUs) for Different Vehicle Types</h4>
+          </div>
+          <div className="chartContainer">
+            <label htmlFor="carModel">Car Model:</label>
+
             <YearlyConsumptionChart/>
           </div>
         </div>
       </div>
+
+
 
       <div className="costChartContainer">
         <div className="chargingEfficiencySection">
@@ -372,7 +393,7 @@ const AnalyticsPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="chargingEfficiencyContainer">
+      <div className="costChartContainer">
         
         <div className="chargingEfficiencySection">
           <div className="dashboardHeader">
