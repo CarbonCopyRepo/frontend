@@ -5,6 +5,8 @@ import React, { useContext, createContext , useState, useEffect} from 'react';
 const sampleGasPrice: number = 3.0; // Adjust this value as needed
 const sampleChargingPrice: number = 0.15; // Adjust this value as needed
 
+
+
 // COORDINATES TO BE CHANGED DYNAMICALLY THROUGH COORDINATECONTEXT
 const startLat: number = 40.0150;
 const startLon: number = -105.2705;
@@ -157,6 +159,23 @@ const AnalyticsPage: React.FC = () => {
   const gasolineData = chargingEfficiencyData.filter((item) => item.type === 'Gas');
 
   const EVCostChart: React.FC<{ data: any[] }> = ({ data }) => {
+
+    
+    const [vehicleMakes, setVehicleMakes] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:3000/api/vehicles/makes?vehicleType=Z')
+            .then(response => response.json())
+            .then(data => {
+                // Update the state with the fetched data
+                setVehicleMakes(data);
+                console.log("First entry in the response:", data[0]);  // Log the first entry to the console
+
+            })
+            .catch(error => console.error('Error loading the data:', error));
+    }, []);  // The empty array makes sure this effect runs only once after the component mounts
+
+
     return (
       <ResponsiveContainer width={1000} height={400}>
         <LineChart data={evCarCost}>
