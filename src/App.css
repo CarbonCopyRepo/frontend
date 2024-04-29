@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap');
 
 /* Reset some basic elements */
-html, body, #root {
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
-  font-family: "Golos Text", sans-serif;
+  font-family: 'Golos Text', sans-serif;
   font-weight: 550;
 }
 
@@ -17,13 +19,12 @@ form {
 }
 
 #full-page {
-  background-image: url("images/background.svg"); /* Replace 'your-image-url.jpg' with the URL of your image
+  background-image: url('images/background.svg'); /* Replace 'your-image-url.jpg' with the URL of your image
   background-size: cover; /* Cover the entire background */
   background-repeat: no-repeat; /* Do not repeat the background image */
 }
 
 /* Full page container */
-
 
 /* Style the header */
 header {
@@ -33,7 +34,7 @@ header {
 
 /* The form input styling */
 input[type='text'] {
-  border-radius: 0.70rem;
+  border-radius: 0.7rem;
   padding: 10px;
 }
 
@@ -42,23 +43,23 @@ button[type='submit'] {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   color: white;
-  background-color: #F75B20;
+  background-color: #f75b20;
   border: none;
-  border-radius: 0.60rem;
+  border-radius: 0.6rem;
   cursor: pointer;
   margin: 0.5rem 0; /* Spacing around button */
   width: 100%; /* Full width of the container */
 }
 
 button[type='submit']:hover {
-  background-color: #FFA148;
+  background-color: #ffa148;
 }
 
 .form-container {
   background-color: #e3e3e3;
-  border-radius: 10px;  
-  padding: 20px;    
-  margin-top: 85px;      
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 85px;
 }
 
 /* Style the container of the charging stations list */
@@ -81,19 +82,26 @@ button[type='submit']:hover {
 /* Make the charging station entries look like cards */
 .station-list > div {
   background-color: white; /* White background for cards */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Simple shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Simple shadow for depth */
   margin-bottom: 1rem; /* Spacing between cards */
   padding: 1rem; /* Padding inside cards */
   border-radius: 0.25rem; /* Rounded corners for cards */
 }
 
 /* Utility classes for spacing */
-.mb-1 { margin-bottom: 1rem; }
-.mb-2 { margin-bottom: 2rem; }
-.mb-3 { margin-bottom: 3rem; }
-.mb-4 { margin-bottom: 4rem;
-        padding-left: 30px;
-        margin-top: 100px;
+.mb-1 {
+  margin-bottom: 1rem;
+}
+.mb-2 {
+  margin-bottom: 2rem;
+}
+.mb-3 {
+  margin-bottom: 3rem;
+}
+.mb-4 {
+  margin-bottom: 4rem;
+  padding-left: 30px;
+  margin-top: 100px;
 }
 
 @media (min-width: 768px) {
@@ -161,13 +169,12 @@ button[type='submit']:hover {
 .cards-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; 
+  gap: 20px;
 }
 
 .card:hover {
-  transform: translateY(-5px); 
+  transform: translateY(-5px);
 }
-
 
 .header-and-cards {
   display: flex;
@@ -201,7 +208,7 @@ button[type='submit']:hover {
   transition: transform 0.2s;
   background-color: white; /* White background for cards */
   border-radius: 15px;
-  align-items: center;     /* Aligns all children including the image in the center horizontally */
+  align-items: center; /* Aligns all children including the image in the center horizontally */
   overflow: hidden; /* Prevents content from overflowing */
   flex-shrink: 0; /* Prevents the cards from shrinking */
   padding: 10px;
@@ -215,7 +222,7 @@ button[type='submit']:hover {
 }
 
 .golos-text-station-card-text {
-  font-family: "Golos Text", sans-serif;
+  font-family: 'Golos Text', sans-serif;
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: normal;
@@ -223,9 +230,9 @@ button[type='submit']:hover {
 
 .card-img-top {
   flex: 0 0 30%; /* Allocates 30% of the card's height to the image */
-  width: 80%;        /* Makes the image fill the container width */
+  width: 80%; /* Makes the image fill the container width */
   height: auto; /* Fixed height for the image */
-  object-fit: contain;   /* Ensures the image fits within the container without cropping */
+  object-fit: contain; /* Ensures the image fits within the container without cropping */
   object-position: center; /* Centers the image within the frame */
 }
 
@@ -237,7 +244,6 @@ button[type='submit']:hover {
   align-items: center;
   padding: 0px;
   margin: 0px;
-  
 }
 
 .form-check-input {
@@ -252,7 +258,7 @@ button[type='submit']:hover {
 }
 
 .form-check-input:checked::before {
-  content: "";
+  content: '';
   position: absolute;
   width: 10px; /* Smaller than the container to fit inside */
   height: 10px;
@@ -265,7 +271,7 @@ button[type='submit']:hover {
 
 /* Styles the entire scrollbar (width for vertical, height for horizontal) */
 ::-webkit-scrollbar {
-  width: 6px;  /* Sets the width of the vertical scrollbar */
+  width: 6px; /* Sets the width of the vertical scrollbar */
   height: 6px; /* Sets the height of the horizontal scrollbar */
 }
 
