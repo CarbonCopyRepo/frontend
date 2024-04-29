@@ -2,8 +2,9 @@ import { Select, Label } from 'flowbite-react';
 
 export default function MileDropdown({ selectedMile, setSelectedMile }: { selectedMile: string }) {
   return (
-    <div className="w-1/5">
+    <div>
       <Label className="w-max">
+        Miles:
         <Select onChange={(e) => setSelectedMile(e.target.value)}>
           <option value="50">50</option>
           <option value="100">100</option>

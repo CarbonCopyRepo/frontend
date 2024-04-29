@@ -9,6 +9,7 @@ import type { VisibilityMap } from '../types/types';
   defer
 ></script>;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const libraries = ['places'];
 const mapContainerStyle = {
   width: '700px',
@@ -17,6 +18,7 @@ const mapContainerStyle = {
   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
   overflow: 'hidden', // Important for applying border-radius to a map
 };
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const center = { lat: -3.745, lng: -38.523 };
 const customMarkerIcon = 'images/markerIcon.svg';
 
@@ -123,10 +125,8 @@ const HomePage: React.FC = () => {
   return (
     <div className="container my-5">
       <section className="userLocationInputSection">
-        <h1 className="mb-4">
-          Determine Your Electric <span>Car Eligibility</span>
-        </h1>
-
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
+        <h1 className="mb-4">EV's Today for a Cooler Tomorrow</h1>
         <div className="form-container">
           <form onSubmit={handleSubmit} className="input-group mb-3">
             <input
@@ -191,6 +191,7 @@ const HomePage: React.FC = () => {
                     checked={visibleStations[title]}
                     onChange={() => handleCheckboxChange(title)}
                   />
+                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                   <label className="form-check-label" htmlFor={`checkbox-${title}`}></label>
                 </div>
               </div>

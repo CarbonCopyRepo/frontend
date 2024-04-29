@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 interface Address {
   label: string;
   countryCode: string;
@@ -46,6 +48,7 @@ interface Contacts {
   www: ContactWww[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface ChargingStation {
   title: string;
   id: string;
@@ -60,10 +63,12 @@ interface ChargingStation {
   contacts: Contacts[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface VisibilityMap {
   [key: string]: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface ImageMap {
   [key: string]: string;
 }

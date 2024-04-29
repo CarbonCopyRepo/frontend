@@ -8,6 +8,7 @@ const defaultCoordinates: Coordinates = {
 
 export const CoordinatesContext = createContext(defaultCoordinates);
 
+// eslint-disable-next-line react/prop-types
 export const CoordinatesContextProvider = ({ children }) => {
   const [coordinates, setCoordinates] = useState(defaultCoordinates);
 

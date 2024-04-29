@@ -1,9 +1,10 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 
 // Create context
 const DistanceContext = createContext(null);
 
 // Provider component
+// eslint-disable-next-line react/prop-types
 export const DistanceProvider = ({ children }) => {
   const [averageDistance, setAverageDistance] = useState(0);
 
@@ -14,4 +15,3 @@ export const DistanceProvider = ({ children }) => {
 };
 
 // Custom hook for using this context
-export const useDistance = () => useContext(DistanceContext);

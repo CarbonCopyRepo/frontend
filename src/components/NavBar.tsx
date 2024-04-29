@@ -27,7 +27,6 @@ export default function NavBar() {
         <Navbar.Link href="/analytics">Analytics</Navbar.Link>
         <Navbar.Link href="/consumption">Consumption</Navbar.Link>
         <Navbar.Link href="/emissions">Emissions</Navbar.Link>
-        <Navbar.Link href="/forecasts">Forecasts</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
   );

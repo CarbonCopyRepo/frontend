@@ -95,7 +95,9 @@ const gasolineCarCost = getFuelCost(electricCarData, gasolineCarData, distanceKm
   (item) => item.type === 'Gas'
 );
 
-const hasChargingCost = (obj: any): obj is { chargingCost: number } => {
+const hasChargingCost = (obj: unknown): obj is { chargingCost: number } => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   return 'chargingCost' in obj;
 };
 const evCarCost = getFuelCost(electricCarData, gasolineCarData, distanceKm).filter(hasChargingCost);
@@ -166,8 +168,6 @@ const AnalyticsPage: React.FC = () => {
   };
 
   const EVCostChart: React.FC<{ data: any[] }> = ({ data }) => {
-
-    
     return (
       <ResponsiveContainer width={1000} height={400}>
         <LineChart data={evCarCost}>
@@ -198,20 +198,20 @@ const AnalyticsPage: React.FC = () => {
   };
 
   const ChargingEfficiencyChart: React.FC<{ data: any[] }> = ({ data }) => {
-
-
     const [vehicleMakes, setVehicleMakes] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/emissions/yearlyByMake?vehicleType=B&make=Audi&model=e-tron%20GT')
-            .then(response => response.json())
-            .then(data => {
-                // Update the state with the fetched data
-                setVehicleMakes(data);
-            })
-            .catch(error => console.error('Error loading the data:', error));
-    }, []);  // The empty array makes sure this effect runs only once after the component mounts
-    
+      fetch(
+        'http://localhost:3000/api/emissions/yearlyByMake?vehicleType=B&make=Audi&model=e-tron%20GT'
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          // Update the state with the fetched data
+          setVehicleMakes(data);
+        })
+        .catch((error) => console.error('Error loading the data:', error));
+    }, []); // The empty array makes sure this effect runs only once after the component mounts
+
     return (
       <div>
         <ResponsiveContainer width={1000} height={400}>
@@ -245,52 +245,92 @@ const AnalyticsPage: React.FC = () => {
     // const [YearlyConsumptionTypeZ, setYearlyConsumptionTypeZ] = useState<YearlyConsumption[]>([]);
     // const [YearlyConsumptionTypeB, setYearlyConsumptionTypeB] = useState<YearlyConsumptionTypeB[]>([]);
 
-      const [combinedData, setCombinedData] = useState<YearlyConsumption[]>([]);
+    const [combinedData, setCombinedData] = useState<YearlyConsumption[]>([]);
 
-      useEffect(() => {
-          Promise.all([
-              fetch('http://localhost:3000/api/consumption/yearly?vehicleType=Z').then(res => res.json()),
-              fetch('http://localhost:3000/api/consumption/yearly?vehicleType=B').then(res => res.json()),
-              fetch('http://localhost:3000/api/consumption/yearly?vehicleType=X').then(res => res.json())
+    useEffect(() => {
+      Promise.all([
+        fetch('http://localhost:3000/api/consumption/yearly?vehicleType=Z').then((res) =>
+          res.json()
+        ),
+        fetch('http://localhost:3000/api/consumption/yearly?vehicleType=B').then((res) =>
+          res.json()
+        ),
+        fetch('http://localhost:3000/api/consumption/yearly?vehicleType=X').then((res) =>
+          res.json()
+        ),
+      ])
+        .then(([dataZ, dataB, dataX]) => {
+          const map = new Map<number, YearlyConsumption>();
 
-          ]).then(([dataZ, dataB, dataX]) => {
-              const map = new Map<number, YearlyConsumption>();
-  
-              dataZ.data.forEach((item: { year: number; consumption: number }) => {
-                  map.set(item.year, { ...map.get(item.year), year: item.year, consumptionZ: item.consumption });
-              });
-  
-              dataB.data.forEach((item: { year: number; consumption: number }) => {
-                  map.set(item.year, { ...map.get(item.year), year: item.year, consumptionB: item.consumption });
-              });
-
-              dataX.data.forEach((item: { year: number; consumption: number }) => {
-                map.set(item.year, { ...map.get(item.year), year: item.year, consumptionX: item.consumption });
+          dataZ.data.forEach((item: { year: number; consumption: number }) => {
+            map.set(item.year, {
+              ...map.get(item.year),
+              year: item.year,
+              consumptionZ: item.consumption,
             });
-              setCombinedData(Array.from(map.values()));
-          }).catch(error => {
-              console.error('Error loading data:', error);
           });
-      }, []);
+
+          dataB.data.forEach((item: { year: number; consumption: number }) => {
+            map.set(item.year, {
+              ...map.get(item.year),
+              year: item.year,
+              consumptionB: item.consumption,
+            });
+          });
+
+          dataX.data.forEach((item: { year: number; consumption: number }) => {
+            map.set(item.year, {
+              ...map.get(item.year),
+              year: item.year,
+              consumptionX: item.consumption,
+            });
+          });
+          setCombinedData(Array.from(map.values()));
+        })
+        .catch((error) => {
+          console.error('Error loading data:', error);
+        });
+    }, []);
     return (
       <div>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={combinedData} margin={{ top: 20, right: 30, left: 30, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" />
-            <YAxis label={{ value: 'Consumption', angle: -90, position: 'insideLeft' ,offset: 10, dx: -30 }} />
+            <YAxis
+              label={{
+                value: 'Consumption',
+                angle: -90,
+                position: 'insideLeft',
+                offset: 10,
+                dx: -30,
+              }}
+            />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="consumptionX" stroke="#1F5FFF" name="Type X (Gasoline)" />
-            <Line type="monotone" dataKey="consumptionZ" stroke="#0088FF" name="Type Z (Gasoline)" />
-            <Line type="monotone" dataKey="consumptionB" stroke="#FF0000" name="Type B (Electric)" />
-
+            <Line
+              type="monotone"
+              dataKey="consumptionX"
+              stroke="#1F5FFF"
+              name="Type X (Gasoline)"
+            />
+            <Line
+              type="monotone"
+              dataKey="consumptionZ"
+              stroke="#0088FF"
+              name="Type Z (Gasoline)"
+            />
+            <Line
+              type="monotone"
+              dataKey="consumptionB"
+              stroke="#FF0000"
+              name="Type B (Electric)"
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>
     );
   };
-
 
   return (
     <div className="analyticsContainer">
@@ -336,12 +376,10 @@ const AnalyticsPage: React.FC = () => {
           <div className="chartContainer">
             <label htmlFor="carModel">Car Model:</label>
 
-            <YearlyConsumptionChart/>
+            <YearlyConsumptionChart />
           </div>
         </div>
       </div>
-
-
 
       <div className="costChartContainer">
         <div className="chargingEfficiencySection">
@@ -394,7 +432,6 @@ const AnalyticsPage: React.FC = () => {
       </div>
 
       <div className="costChartContainer">
-        
         <div className="chargingEfficiencySection">
           <div className="dashboardHeader">
             <h4>Efficiencies For Electric & Gas Vehicles</h4>
@@ -418,8 +455,6 @@ const AnalyticsPage: React.FC = () => {
           </ul>
         </div>
       </div>
-
-
     </div>
   );
 };

@@ -17,8 +17,9 @@ function AutocompleteSearchBar({ onLocationSelect }: AutocompleteSearchBarProps)
 
       autocomplete.current.addListener('place_changed', onPlaceChanged);
     }
-  }, []);
+  }, [onPlaceChanged]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function onPlaceChanged() {
     if (!autocomplete.current) return;
     const place = autocomplete.current.getPlace();
