@@ -4,6 +4,7 @@ export default function MileDropdown({ selectedMile, setSelectedMile }: { select
   return (
     <div className="w-1/5">
       <Label className="w-max">
+        Miles:
         <Select onChange={(e) => setSelectedMile(e.target.value)}>
           <option value="50">50</option>
           <option value="100">100</option>
