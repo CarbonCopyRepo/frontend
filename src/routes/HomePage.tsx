@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import '../App.css';
+import { CoordinatesContext } from '../App';
 import type { VisibilityMap } from '../types/types';
 
 <script
@@ -20,7 +21,9 @@ const center = { lat: -3.745, lng: -38.523 };
 const customMarkerIcon = 'images/markerIcon.svg';
 
 const HomePage: React.FC = () => {
-  const [coordinates, setCoordinates] = useState({ lat: 40.015, lng: -105.2705 });
+  // Setup Context
+  const { coordinates, setCoordinates } = useContext(CoordinatesContext);
+
   const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]);
   const [loading, setLoading] = useState(false);
   const [center, setCenter] = useState({ lat: -3.745, lng: -38.523 });
@@ -46,6 +49,19 @@ const HomePage: React.FC = () => {
     FLO: 'images/station_logos/flo.png',
     LADWP: 'images/station_logos/LA.webp',
   };
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((location) =>
+      setCoordinates({
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+      })
+    );
+  });
+
+  useEffect(() => {
+    setCenter({ lat: coordinates.lat, lng: coordinates.lng });
+  }, [coordinates]);
 
   useEffect(() => {
     const counts = new Map();
@@ -79,10 +95,6 @@ const HomePage: React.FC = () => {
       [title]: !prevStations[title], // Toggle visibility based on title
     }));
   };
-
-  useEffect(() => {
-    setCenter({ lat: coordinates.lat, lng: coordinates.lng });
-  }, [coordinates]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCoordinates({ ...coordinates, [e.target.name]: parseFloat(e.target.value) });

@@ -67,3 +67,8 @@ export type VisibilityMap = {
 export type ImageMap = {
   [key: string]: string;
 };
+
+export type Coordinates = {
+  lat: number;
+  lng: number;
+};

@@ -1,12 +1,12 @@
 import electricCarData from '../data/ev.json';
 import gasolineCarData from '../data/gasoline_vehicles.json';
-import '../Analytics.css';
-import React, { useContext, createContext , useState, useEffect} from 'react';
+import './Analytics.css';
+import React, { useContext, createContext, useState, useEffect } from 'react';
 const sampleGasPrice: number = 3.0; // Adjust this value as needed
 const sampleChargingPrice: number = 0.15; // Adjust this value as needed
 
 // COORDINATES TO BE CHANGED DYNAMICALLY THROUGH COORDINATECONTEXT
-const startLat: number = 40.0150;
+const startLat: number = 40.015;
 const startLon: number = -105.2705;
 const endLat: number = 36.7783;
 const endLon: number = -119.4179;
@@ -84,10 +84,9 @@ const calculateChargingEfficiency = (carData: ElectricCarData): number => {
 
 const mpgToLper100km = (mpg: number) => 235.214583 / mpg; // 235.214583 is the conversion factor from mpg to L/100km
 
-const getFuelCost = (evData: ElectricCarData[], gasData: GasolineCarData[], distance :number) => {
-
+const getFuelCost = (evData: ElectricCarData[], gasData: GasolineCarData[], distance: number) => {
   const evEfficiencyData = evData.map((car) => ({
-    chargingCost : (((car.energy_per_100_km / 100) * distanceKm) * sampleChargingPrice),
+    chargingCost: (car.energy_per_100_km / 100) * distanceKm * sampleChargingPrice,
     make: car.make,
     model: car.model,
     type: 'EV',
@@ -111,7 +110,9 @@ const getFuelCost = (evData: ElectricCarData[], gasData: GasolineCarData[], dist
   return [...evEfficiencyData, ...gasEfficiencyData];
 };
 
-const gasolineCarCost = getFuelCost(electricCarData, gasolineCarData, distanceKm).filter((item) => item.type === 'Gas');
+const gasolineCarCost = getFuelCost(electricCarData, gasolineCarData, distanceKm).filter(
+  (item) => item.type === 'Gas'
+);
 
 const hasChargingCost = (obj: any): obj is { chargingCost: number } => {
   return 'chargingCost' in obj;
@@ -119,14 +120,11 @@ const hasChargingCost = (obj: any): obj is { chargingCost: number } => {
 const evCarCost = getFuelCost(electricCarData, gasolineCarData, distanceKm).filter(hasChargingCost);
 
 const AnalyticsPage: React.FC = () => {
-
   const [coordinates, setCoordinates] = useState({ lat: 40.015, lng: -105.2705 });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCoordinates({ ...coordinates, [e.target.name]: parseFloat(e.target.value) });
-
   };
-
 
   const prepareData = (evData: ElectricCarData[], gasData: GasolineCarData[]) => {
     const evEfficiencyData = evData
@@ -171,33 +169,31 @@ const AnalyticsPage: React.FC = () => {
   };
 
   const CostChart: React.FC<{ data: any[] }> = ({ data }) => {
-
-    const [coordinates, setCoordinates] = useState({ lat: 40.0150, lng: -105.2705 });
+    const [coordinates, setCoordinates] = useState({ lat: 40.015, lng: -105.2705 });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCoordinates(prevCoords => ({
+      setCoordinates((prevCoords) => ({
         ...prevCoords,
-        [e.target.name]: parseFloat(e.target.value) || 0 // Ensuring valid float or defaulting to 0
+        [e.target.name]: parseFloat(e.target.value) || 0, // Ensuring valid float or defaulting to 0
       }));
-    };    
-    const [distanceKm, setDistanceKm] = useState(() => haversineDistance(startLat, startLon, endLat, endLon));
+    };
+    const [distanceKm, setDistanceKm] = useState(() =>
+      haversineDistance(startLat, startLon, endLat, endLon)
+    );
     const [fuelData, setFuelData] = useState<VehicleData[]>([]);
-    
-    
-      
-    return (
 
-    <div>       
-      <ResponsiveContainer width={1000} height={400}>
-        <LineChart data={gasolineCarCost}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis />
-          <YAxis label={{ value: 'Fuel Cost ($)', angle: -90, position: 'insideLeft' }} />
-          <Tooltip />
-          <Line type="linear" dataKey="fuelCost" stroke="#0088FF" name="Dollars" />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>      
+    return (
+      <div>
+        <ResponsiveContainer width={1000} height={400}>
+          <LineChart data={gasolineCarCost}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis />
+            <YAxis label={{ value: 'Fuel Cost ($)', angle: -90, position: 'insideLeft' }} />
+            <Tooltip />
+            <Line type="linear" dataKey="fuelCost" stroke="#0088FF" name="Dollars" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     );
   };
 
@@ -234,10 +230,8 @@ const AnalyticsPage: React.FC = () => {
   };
 
   return (
-
-    
     <div className="analyticsContainer">
-{/* 
+      {/*
         <div className="form-container">
           <form className="input-group mb-3">
             <input
@@ -261,10 +255,9 @@ const AnalyticsPage: React.FC = () => {
               <button className="btn btn-primary" type="submit" disabled={loading}>
                 {loading ? 'Loading...' : 'Find Stations'}
               </button>
-            </div> 
+            </div>
           </form>
         </div> */}
-
 
       <div className="chargingEfficiencyContainer">
         <div className="chargingEfficiencySection">
@@ -297,49 +290,49 @@ const AnalyticsPage: React.FC = () => {
             <h4>Analytics Dashboard</h4>
           </div>
           <div className="chartContainer">
-            <EVCostChart data = {evCarCost}/>
-            </div>
-          </div>
-          
-          <div className="highEfficiencyList">
-            <h5>Charging Costs</h5>
-            <ul>
-              {evCarCost.map((car, index) => (
-                <li key={index} className="listItem">
-                  <div className="carInfo">{car.combinedLabel}</div>
-                    <div className="efficiencyInfo">
-                    {('chargingCost' in car) ? `$ ${car.chargingCost.toFixed(2)}`  : 'No Data'}
-                    </div>                    
-                </li>
-              ))}
-            </ul>
+            <EVCostChart data={evCarCost} />
           </div>
         </div>
 
-        <div className="costChartContainerGasoline">
-          <div className="chargingEfficiencySection">
-            <div className="dashboardHeader">
-              <h4>Analytics Dashboard</h4>
-            </div>
-            <div className="chartContainer">
-              <CostChart data = {gasolineCarCost}/>
-              </div>
-            </div>
-            
-            <div className="highEfficiencyList">
-              <h5>Charging Costs for Gasoline Vehicles</h5>
-              <ul>
-                {gasolineCarCost.map((car, index) => (
-                  <li key={index} className="listItem">
-                    <div className="carInfo">{car.model}</div>
-                      <div className="efficiencyInfo">
-                      {('fuelCost' in car) ? `$ ${car.fuelCost}`  : 'No Data'}
-                      </div>                    
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="highEfficiencyList">
+          <h5>Charging Costs</h5>
+          <ul>
+            {evCarCost.map((car, index) => (
+              <li key={index} className="listItem">
+                <div className="carInfo">{car.combinedLabel}</div>
+                <div className="efficiencyInfo">
+                  {'chargingCost' in car ? `$ ${car.chargingCost.toFixed(2)}` : 'No Data'}
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
+      </div>
+
+      <div className="costChartContainerGasoline">
+        <div className="chargingEfficiencySection">
+          <div className="dashboardHeader">
+            <h4>Analytics Dashboard</h4>
+          </div>
+          <div className="chartContainer">
+            <CostChart data={gasolineCarCost} />
+          </div>
+        </div>
+
+        <div className="highEfficiencyList">
+          <h5>Charging Costs for Gasoline Vehicles</h5>
+          <ul>
+            {gasolineCarCost.map((car, index) => (
+              <li key={index} className="listItem">
+                <div className="carInfo">{car.model}</div>
+                <div className="efficiencyInfo">
+                  {'fuelCost' in car ? `$ ${car.fuelCost}` : 'No Data'}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
