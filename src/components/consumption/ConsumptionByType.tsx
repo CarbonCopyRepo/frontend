@@ -24,7 +24,7 @@ export default function EmissionsByModel() {
   }, [selectedType, selectedMile]);
 
   return (
-    <div className="bg-white rounded">
+    <div className="bg-white rounded mt-20">
       <h1>Consumption by Vehicle Type</h1>
       <div className="flex flex-row">
         <div className="w-1/3">
@@ -32,21 +32,19 @@ export default function EmissionsByModel() {
           <MileDropdown selectedMile={selectedMile} setSelectedMile={setSelectedMile} />
         </div>
         <div>
-          {consumption && consumption.length > 0 && (
-            <LineChart
-              width={730}
-              height={250}
-              data={consumption}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="year" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="consumption" stroke="#8884d8" />
-            </LineChart>
-          )}
+          <LineChart
+            width={730}
+            height={250}
+            data={consumption}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="year" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="consumption" stroke="#8884d8" />
+          </LineChart>
         </div>
       </div>
     </div>
